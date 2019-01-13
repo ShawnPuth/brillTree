@@ -1,0 +1,28 @@
+{
+    "name": "stream/junkman",
+    "description": "php运行环境代码段实时监控,gc日志收集分析",
+    "authors": [
+        {
+            "name": "Hikki",
+            "email": "946818508@qq.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "JunkMan\\Abstracts\\": "src/Abstracts",
+            "JunkMan\\Configuration\\": "src/Configuration",
+            "JunkMan\\Container\\": "src/Container",
+            "JunkMan\\Driver\\": "src/Driver",
+            "JunkMan\\E\\": "src/E",
+            "JunkMan\\Instrument\\": "src/Instrument",
+            "JunkMan\\Operation\\": "src/Operation",
+            "JunkMan\\Pipeline\\": "src/Pipeline",
+            "JunkMan\\Resolver\\": "src/Resolver",
+            "JunkMan\\": "src/"
+        }
+    }
+}

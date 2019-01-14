@@ -25,7 +25,7 @@ EOF;
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
 
         $data = $array = [
-     ["id"=>1,"p_id"=>2,"name"=>"中国"],
+     ["id"=>1,"p_id"=>0,"name"=>"中国"],
      ["id"=>2,"p_id"=>1,"name"=>"四川"],
      ["id"=>3,"p_id"=>1,"name"=>"北京"],
      ["id"=>4,"p_id"=>2,"name"=>"成都"]];

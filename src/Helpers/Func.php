@@ -1,4 +1,5 @@
 <?php
+namespace DenDroGram\Helpers;
 
 class Func
 {

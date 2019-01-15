@@ -2,62 +2,16 @@
     clear: both;
 }
 
-.treeView .branch{
-    border-left:1px solid #c6c6c6;margin-left: 1em;
-}
-
-.treeView .line{
-    border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px;
-}
-
-.treeView button{
-    height:40px;padding: 0 10px;float: left;
-}
-
-.treeView span{
+.dendrogram span{
     position: relative;
 }
 
-.treeView .text{
+.dendrogram .text{
     width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 }
 
-.tree_retract{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #1e87f0;
-    border-radius:10px 0 0 10px;
-}
-
-.tree_ban{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #000000;
-    border-radius:10px 0 0 10px;
-}
-
-.tree_grow{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #1e87f0;
-    border-radius:0 10px 10px 0;
-}
-.tree_retract:hover,.tree_grow:hover{
-    background-color: #0f7ae5;
-}
-.tree_ban>span,.tree_retract>span,.tree_grow>span{
-    color: white;
-    margin-top: 13px;
-    margin-left: 3px;
-}
-
-.uk-button {
+.dendrogram-button {
+    height:40px;padding: 0 10px;float: left;
     background-color: transparent;
     color: #222;
     border: 1px solid #e5e5e5;
@@ -67,7 +21,6 @@
     text-transform: none;
     display: inline-block;
     box-sizing: border-box;
-    padding: 0 30px;
     vertical-align: middle;
     font-size: .875rem;
     line-height: 38px;
@@ -78,21 +31,59 @@
     transition-property: color,background-color,border-color;
 }
 
-.uk-list {
+.dendrogram-adjacency-branch{
+    border-left:1px solid #c6c6c6;margin-left: 1em;
+}
+
+.dendrogram-adjacency-line{
+    border-top:1px solid #c6c6c6;float: left;width: 30px;margin-left: -30px;margin-top: 20px;
+}
+
+.dendrogram-adjacency-retract{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:10px 0 0 10px;
+}
+
+.dendrogram-adjacency-ban{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #000000;
+    border-radius:10px 0 0 10px;
+}
+
+.dendrogram-adjacency-grow{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:0 10px 10px 0;
+}
+.dendrogram-adjacency-retract:hover,.dendrogram-adjacency-grow:hover{
+    background-color: #0f7ae5;
+}
+
+.dendrogram-adjacency-list {
     padding: 0;
     list-style: none;
 }
 
-.uk-list>li>ul {
+.dendrogram-adjacency-list>li>ul {
     margin-top: 10px;
 }
 
-.uk-list ul {
-    margin: 0;
+.dendrogram-adjacency-list ul {
+    margin-top: 10px;
     padding-left: 30px;
     list-style: none;
 }
 
-.uk-list>li:nth-child(n+2), .uk-list>li>ul {
+.dendrogram-adjacency-list li:nth-child(n+2){
     margin-top: 10px;
 }

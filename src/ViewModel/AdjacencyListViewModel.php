@@ -18,23 +18,23 @@ class AdjacencyListViewModel
     private $elements = ["name","value","sort"];
 
     private $root = <<<EOF
-<ul class="uk-list treeView uk-animation-toggle">%s</ul>
+<ul class="dendrogram dendrogram-adjacency-list">%s</ul>
 EOF;
 
     private $branch = <<<EOF
-<ul class="uk-list branch">%s</ul>
+<ul class="dendrogram dendrogram-adjacency-branch">%s</ul>
 EOF;
 
     private $leaf = <<<EOF
 <li>
     <div data-v=%s>
-         <div class="line"></div>
-         <a href="javascript:void(0);" class="tree_retract" data-sign="1">
+         <div class="dendrogram-adjacency-line"></div>
+         <a href="javascript:void(0);" class="dendrogram-adjacency-retract" data-sign="1">
              <span style="position: relative;" uk-icon="icon: minus-circle; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" href="#form" uk-toggle>
+             <button class="dendrogram-button" href="#form">
                 <div class="text">%s<div>
              </button>
-         <a href="#form" class="tree_grow" uk-toggle>
+         <a href="#form" class="dendrogram-adjacency-grow">
              <span uk-icon="icon: info; ratio: 0.7"></span></a>
          <div class="clear_both"></div>
     </div>
@@ -45,13 +45,13 @@ EOF;
     private $leaf_apex = <<<EOF
 <li>
     <div data-v=%s>
-         <div class="line"></div>
-         <a href="javascript:void(0);" class="tree_ban">
+         <div class="dendrogram-adjacency-line"></div>
+         <a href="javascript:void(0);" class="dendrogram-adjacency-ban">
              <span uk-icon="icon: ban; ratio: 0.7"></span></a>
-             <button class="uk-button uk-button-default" href="#form" uk-toggle>
+             <button class="dendrogram-button" href="#form">
                 <div class="text">%s<div>
              </button>
-         <a href="#form" class="tree_grow" uk-toggle>
+         <a href="#form" class="dendrogram-adjacency-grow">
              <span style="position: relative;" uk-icon="icon: info; ratio: 0.7"></span></a>
          <div class="clear_both"></div>
     </div>
@@ -60,9 +60,9 @@ EOF;
 EOF;
 
     private $form = <<<EOF
-<div id="form" uk-modal>
+<div id="form">
     <div class="uk-modal-dialog">
-        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <button class="uk-modal-close-default" type="button"></button>
         <div class="uk-modal-header">
             <h2 class="uk-modal-title">Headline</h2>
         </div>
@@ -86,7 +86,7 @@ EOF;
     public function index($data)
     {
         $this->makeTree('id','p_id',$data,$tree);
-        $this->tree_view = $this->tree_view.$this->makeForm();
+        //$this->tree_view = $this->tree_view.$this->makeForm();
         return $this->tree_view;
     }
 

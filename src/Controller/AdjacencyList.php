@@ -16,7 +16,6 @@ class AdjacencyList implements Structure
     private static $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
-<button class="ttt">ccc</button>
 %s
 <script>
 dendrogram.tree.init();
@@ -32,7 +31,9 @@ EOF;
      ["id"=>1,"p_id"=>0,"name"=>"中国"],
      ["id"=>2,"p_id"=>1,"name"=>"四川"],
      ["id"=>3,"p_id"=>1,"name"=>"北京"],
-     ["id"=>4,"p_id"=>2,"name"=>"成都"]];
+     ["id"=>4,"p_id"=>2,"name"=>"成都"],
+     ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
+            ];
 
         $html = (new AdjacencyListViewModel())->index($data);
 

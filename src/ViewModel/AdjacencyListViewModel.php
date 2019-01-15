@@ -30,12 +30,13 @@ EOF;
     <div data-v=%s>
          <div class="dendrogram-adjacency-line"></div>
             <a href="javascript:void(0);" class="dendrogram-adjacency-retract" data-sign="1">
-                <svg class="dendrogram-icon">
-                    <svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle>
-                    <svg width="20" height="20" stroke="#fff" fill="#fff" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polygon points="8 5 13 10 8 15"></polygon></svg>
-                    </svg>
-                </span>
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="expand">
+                <circle fill="none" stroke="#fff" cx="9.5" cy="9.5" r="9"></circle>
+                <polygon stroke="#fff" stroke-width="0.8" points="13 2 18 2 18 7 17 7 17 3 13 3"></polygon>
+                <polygon stroke="#fff" stroke-width="0.8" points="2 13 3 13 3 17 7 17 7 18 2 18"></polygon>
+                <path fill="none" stroke="#fff" stroke-width="0.8" d="M11,9 L17,3"></path>
+                <path fill="none" stroke="#fff" stroke-width="0.8" d="M3,17 L9,11"></path>
+                </svg>
              </a>
              <button class="dendrogram-button" href="#form">
                 <div class="text">%s<div>

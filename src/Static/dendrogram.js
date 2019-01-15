@@ -24,9 +24,13 @@
                 });
             }
         },
-        tree_view:{
+        tree:{
             init:function () {
-
+                var objs = document.getElementsByClassName('dendrogram-adjacency-retract');
+                console.log(objs.length)
+                for (var i=0;i<objs.length;i++) {
+                    objs[i].onclick = dendrogram.tree.retract;
+                }
             },
             addForm:function () {
 
@@ -38,7 +42,7 @@
                 
             },
             retract:function () {
-
+                console.log(this)
             }
         }
     };

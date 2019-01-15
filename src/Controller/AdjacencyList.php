@@ -16,7 +16,11 @@ class AdjacencyList implements Structure
     private static $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
+<button class="ttt">ccc</button>
 %s
+<script>
+dendrogram.tree.init();
+</script>
 EOF;
 
     public static function buildTree()

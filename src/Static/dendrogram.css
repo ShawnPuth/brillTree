@@ -2,15 +2,26 @@
     clear: both;
 }
 
-.dendrogram span{
-    position: relative;
+.dendrogram{
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
 }
 
 .dendrogram .text{
     width: 80px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
 }
 
+.dendrogram-icon{
+    display: inline;
+    width: 14px;
+    height: 14px;
+    position: relative;
+    top:13px;
+    left: 3px;
+}
+
 .dendrogram-button {
+    cursor: pointer;
     height:40px;padding: 0 10px;float: left;
     background-color: transparent;
     color: #222;
@@ -18,7 +29,6 @@
     margin: 0;
     overflow: visible;
     font: inherit;
-    text-transform: none;
     display: inline-block;
     box-sizing: border-box;
     vertical-align: middle;
@@ -27,8 +37,12 @@
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    transition: .1s ease-in-out;
+    transition: .2s ease-in-out;
     transition-property: color,background-color,border-color;
+}
+
+.dendrogram-button:hover{
+    border: 1px solid #bababa;
 }
 
 .dendrogram-adjacency-branch{
@@ -87,3 +101,51 @@
 .dendrogram-adjacency-list li:nth-child(n+2){
     margin-top: 10px;
 }
+
+/*anime*/
+.dendrogram-animation-fade {
+    animation-name: dendrogram-fade;
+    animation-duration: 0.8s;
+    animation-timing-function: linear;
+}
+
+.dendrogram-animation-reverse {
+    animation-name: dendrogram-fade-top-small;
+    animation-duration: .5s;
+    animation-direction: reverse;
+    animation-timing-function: ease-in;
+}
+
+.dendrogram-animation-slide-top-small{
+    animation-name: dendrogram-fade-top-small;
+    animation-duration: .5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: both;
+}
+
+/*
+ * Fade
+ */
+@keyframes dendrogram-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/*
+ * Slide Top Small
+ */
+@keyframes dendrogram-fade-top-small {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

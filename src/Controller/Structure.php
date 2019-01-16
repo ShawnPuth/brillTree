@@ -11,6 +11,6 @@ namespace DenDroGram\Controller;
 
 interface Structure
 {
-    public static function buildTree();
+    public static function buildTree($expand = true,array $column = ['name'],array $form_data = ['name']);
     public static function operateNode();
 }

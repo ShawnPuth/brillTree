@@ -22,7 +22,7 @@ dendrogram.tree.init();
 </script>
 EOF;
 
-    public static function buildTree()
+    public static function buildTree($expand = true,array $column = ['name'],array $form_data = ['name'])
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
@@ -35,7 +35,7 @@ EOF;
      ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
             ];
 
-        $html = (new AdjacencyListViewModel())->index($data);
+        $html = (new AdjacencyListViewModel())->index($data,$expand,$column,$form_data);
 
         return sprintf(self::$view,$css,$js,$html);
     }

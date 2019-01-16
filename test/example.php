@@ -11,5 +11,5 @@ test1();
 
 function test1()
 {
-   echo \DenDroGram\Controller\AdjacencyList::buildTree();
+   echo \DenDroGram\Controller\AdjacencyList::buildTree(true);
 }

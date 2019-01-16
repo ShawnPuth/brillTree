@@ -75,7 +75,7 @@
                     dendrogram.relpaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
                     children.classList.remove('dendrogram-animation-slide-top-small');
-                    children.classList.add('dendrogram-animation-reverse');
+                    //children.classList.add('dendrogram-animation-reverse');
                     children.setAttribute('style', 'display:none');
                 }
             }

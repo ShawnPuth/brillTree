@@ -4,10 +4,10 @@
 
     var dendrogram = {
         icon_data:{
-        'expand':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><polygon stroke="#fff" fill="#fff" points="13 2 18 2 18 7 17 7 17 3 13 3"></polygon><polygon stroke="#fff" fill="#fff" points="2 13 3 13 3 17 7 17 7 18 2 18"></polygon><path fill="none" stroke="#fff" stroke-width="1.1" d="M11,9 L17,3"></path><path fill="none" stroke="#fff" stroke-width="1.1" d="M3,17 L9,11"></path></svg></span>',
-        'shrink':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><polygon stroke="#fff" fill="#fff" points="11 4 12 4 12 8 16 8 16 9 11 9"></polygon><polygon stroke="#fff" fill="#fff" points="4 11 9 11 9 16 8 16 8 12 4 12"></polygon><path stroke="#fff" fill="#fff" stroke-width="1.1" d="M12,8 L18,2"></path><path stroke="#fff" fill="#fff" stroke-width="1.1" d="M2,18 L8,12"></path></svg></span>',
-        'grow':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" x1="9.5" y1="5" x2="9.5" y2="14"></line><line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"></line></svg></span> ',
-        'ban':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
+            'expand':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle> <line fill="none" stroke="#fff" x1="9.5" y1="5" x2="9.5" y2="14"></line> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"></line></svg></span>',
+            'shrink':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"></line></svg></span>',
+            'grow':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"></line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"></line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"></circle></svg></span> ',
+            'ban':'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
         },
         requestEvent: {
             apply: function (url, data, method, callback) {
@@ -65,18 +65,37 @@
                 var sign = node.getAttribute('data-sign');
                 var children = node.parentNode.childNodes[3];
 
-                if(sign == 0){
+                if(sign == 0){//open
                     dendrogram.relpaceChild(this,dendrogram.icon_data.shrink);
                     node.setAttribute('data-sign',1);
-                    children.classList.remove('dendrogram-animation-reverse');
+                    sign = 1;
                     children.setAttribute('style', 'display:block');
+                    children.classList.remove('dendrogram-animation-reverse');
                     children.classList.add('dendrogram-animation-slide-top-small');
-                }else {
+                    /*var callback = function(sign){
+                        if(sign === 1){
+                            console.log(777777)
+                            children.setAttribute('style', 'display:block');
+                        }
+                    }
+                    children.addEventListener('animationstart',callback(sign))*/
+
+                }else {//shut
                     dendrogram.relpaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
+                    sign = 0;
                     children.classList.remove('dendrogram-animation-slide-top-small');
-                    //children.classList.add('dendrogram-animation-reverse');
-                    children.setAttribute('style', 'display:none');
+                    children.classList.add('dendrogram-animation-reverse');
+
+                    var callback = function(event){
+                        event.preventDefault();
+                        if(sign === 0){
+                            console.log(sign)
+                            children.setAttribute('style', 'display:none');
+                        }
+                        //children.removeEventListener('animationend',callback,false)
+                    }
+                    children.addEventListener('animationend',callback,false)
                 }
             }
         }

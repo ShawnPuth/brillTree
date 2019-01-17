@@ -68,34 +68,15 @@
                 if(sign == 0){//open
                     dendrogram.relpaceChild(this,dendrogram.icon_data.shrink);
                     node.setAttribute('data-sign',1);
-                    sign = 1;
                     children.setAttribute('style', 'display:block');
                     children.classList.remove('dendrogram-animation-reverse');
                     children.classList.add('dendrogram-animation-slide-top-small');
-                    /*var callback = function(sign){
-                        if(sign === 1){
-                            console.log(777777)
-                            children.setAttribute('style', 'display:block');
-                        }
-                    }
-                    children.addEventListener('animationstart',callback(sign))*/
-
                 }else {//shut
                     dendrogram.relpaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
-                    sign = 0;
                     children.classList.remove('dendrogram-animation-slide-top-small');
                     children.classList.add('dendrogram-animation-reverse');
-
-                    var callback = function(event){
-                        event.preventDefault();
-                        if(sign === 0){
-                            console.log(sign)
-                            children.setAttribute('style', 'display:none');
-                        }
-                        //children.removeEventListener('animationend',callback,false)
-                    }
-                    children.addEventListener('animationend',callback,false)
+                    children.setAttribute('style', 'display:none');
                 }
             }
         }

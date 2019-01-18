@@ -68,12 +68,14 @@
                 if(sign == 0){//open
                     dendrogram.relpaceChild(this,dendrogram.icon_data.shrink);
                     node.setAttribute('data-sign',1);
+                    sign = 1;
                     children.setAttribute('style', 'display:block');
                     children.classList.remove('dendrogram-animation-reverse');
                     children.classList.add('dendrogram-animation-slide-top-small');
                 }else {//shut
                     dendrogram.relpaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
+                    sign = 0;
                     children.classList.remove('dendrogram-animation-slide-top-small');
                     children.classList.add('dendrogram-animation-reverse');
                     children.setAttribute('style', 'display:none');

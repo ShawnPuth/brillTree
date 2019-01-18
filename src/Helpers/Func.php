@@ -126,23 +126,22 @@ class Func
     public static function quadraticArraySort(array $array, $field, $order = SORT_ASC)
     {
         $new_array = array();
-        $sortable_array = array();
 
         foreach ($array as $k => $v) {
-
+            if(isset($new_array[$v[$field]])){
+                $new_array[$v[$field] + 1] = $v;
+                continue;
+            }
+            $new_array[$v[$field]] = $v;
         }
 
         switch ($order) {
             case SORT_ASC:
-                asort($sortable_array);
+                asort($new_array);
                 break;
             case SORT_DESC:
-                arsort($sortable_array);
+                arsort($new_array);
                 break;
-        }
-
-        foreach ($sortable_array as $k => $v) {
-            $new_array[] = $array[$k];
         }
 
         return $new_array;
@@ -155,12 +154,12 @@ class Func
      *  ["id"=>3,"p_id"=>1,"name"=>"北京"],
      *  ["id"=>4,"p_id"=>2,"name"=>"成都"]];
      * 二维数组转树形结构
-     * @param string $id
-     * @param string $p_id
+     * @param string $id_name
+     * @param string $p_id_name
      * @param array $array
      * @param array $tree
      */
-    public static function quadraticArrayToTree($id, $p_id, &$array, &$tree = [])
+    public static function quadraticArrayToTreeStructure($id_name, $p_id_name, &$array, &$tree = [])
     {
         if (empty($array)) {
             return;
@@ -168,21 +167,48 @@ class Func
 
         if (empty($tree)) {
             $item = array_shift($array);
-            $tree[$item[$id]] = [];
+            $tree[$item[$id_name]] = [];
         }
 
         foreach ($tree as $branch => &$leaves) {
             foreach ($array as $key => $value) {
-                if ($value[$p_id] == $branch) {
-                    $leaves[$value[$id]] = [];
+                if ($value[$p_id_name] == $branch) {
+                    $leaves[$value[$id_name]] = [];
                     unset($array[$key]);
                 }
             }
 
             if (!empty($leaves) && $array) {
-                self::quadraticArrayToTree($id, $p_id, $array, $leaves);
+                self::quadraticArrayToTreeStructure($id_name, $p_id_name, $array, $leaves);
             }
         }
+    }
+
+    /**
+     * @param $id_name
+     * @param $p_id_name
+     * @param $children
+     * @param $p_id
+     * @param $array
+     * @param array $tree
+     * @return array
+     */
+    public static function quadraticArrayToTreeData($id_name, $p_id_name,$children,$p_id,$array, &$tree = [])
+    {
+        if (!empty($array)) {
+            $newList = [];
+            foreach ($array as $k => $v) {
+                $newList[$v[$id_name]] = $v;
+            }
+            foreach ($newList as $value) {
+                if ($p_id == $value[$p_id_name]) {
+                    $tree[] = &$newList[$value[$id_name]];
+                } elseif (isset($newList[$value[$p_id_name]])) {
+                    $newList[$value[$p_id_name]][$children][] = &$newList[$value[$id_name]];
+                }
+            }
+        }
+        return $tree;
     }
 
     /**

@@ -67,6 +67,7 @@
                 var children = node.parentNode.childNodes[3];
 
                 if(dendrogram.tree.shrinkAnimeFlag){
+                    console.log('animetion is running')
                     return;
                 }
                 dendrogram.tree.shrinkAnimeFlag = true;

@@ -26,176 +26,36 @@ class NestedSetViewModel
         'ban'=>'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
     ];
 
-    private $root = <<<EOF
-<ul class="dendrogram dendrogram-adjacency-list dendrogram-animation-fade">%s</ul>
-EOF;
-
-    private $branch = <<<EOF
-<ul class="dendrogram dendrogram-adjacency-branch" style="display:%s">%s</ul>
-EOF;
-
-    private $leaf = <<<EOF
-<li>
-    <div data-v=%s data-sign=%d>
-            <a href="javascript:void(0);" class="dendrogram-adjacency-retract dendrogram-adjacency-node">
-                %s
-             </a>
-             <button class="dendrogram-button" href="#form">
-                %s
-             </button>
-         <a href="#form" class="dendrogram-adjacency-grow">
-            %s   
-         </a>
-         <div class="clear_both"></div>
-    </div>
-    %s
-</li>
-EOF;
-
-    private $leaf_apex = <<<EOF
-<li>
-    <div data-v=%s>
-         <a href="javascript:void(0);" class="dendrogram-adjacency-ban dendrogram-adjacency-node">
-            %s 
-         </a>
-             <button class="dendrogram-button" href="#form">
-                %s
-             </button>
-         <a href="#form" class="dendrogram-adjacency-grow">
-            %s
-         </a>
-         <div class="clear_both"></div>
-    </div>
-    %s
-</li>
-EOF;
-
-    private $form = <<<EOF
-<div id="form">
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-default" type="button"></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Headline</h2>
-        </div>
-        <div class="uk-modal-body">
-            %s
-        </div>
-        <div class="uk-modal-footer uk-text-right"> 
-            <button class="uk-button uk-button-danger" type="button">删除</button>
-            <button class="uk-button uk-button-primary" type="button">保存</button>
-        </div>
-    </div>
-</div>
-EOF;
-
-    private $input = <<<EOF
-<div class="uk-margin">
-     <input class="uk-input" type="text" placeholder="%s" name="%s" value="">
-</div>
-EOF;
-
     public function index($data,$expand,$column,$form_data)
     {
         $this->expand = $expand;
         $this->column = $column;
         $this->form_data = $form_data;
 
-        if($this->expand){
-            $this->branch = Func::firstSprintf($this->branch,'block');
-        }else{
-            $this->branch = Func::firstSprintf($this->branch,'none');
-        }
+        $data = [
+            ["id"=>1,"left"=>1,"right"=>22,"depth"=>0,"name"=>"衣服"],
+            ["id"=>2,"left"=>2,"right"=>9,"depth"=>1,"name"=>"男衣"],
+            ["id"=>3,"left"=>10,"right"=>21,"depth"=>1,"name"=>"女衣"],
+            ["id"=>4,"left"=>3,"right"=>8,"depth"=>2,"name"=>"正装"],
+            ["id"=>5,"left"=>4,"right"=>5,"depth"=>3,"name"=>"衬衫"],
+            ["id"=>6,"left"=>6,"right"=>7,"depth"=>3,"name"=>"夹克"],
+            ["id"=>7,"left"=>11,"right"=>16,"depth"=>2,"name"=>"裙子"],
+            ["id"=>8,"left"=>17,"right"=>18,"depth"=>2,"name"=>"短裙"],
+            ["id"=>9,"left"=>19,"right"=>20,"depth"=>2,"name"=>"开衫"],
+        ];
 
-        $this->makeTree('id', 'p_id', $data, $tree);
-        //$this->tree_view = $this->tree_view.$this->makeForm();
+        $this->makeTree($data);
+
         return $this->tree_view;
     }
 
-    private function makeForm()
+    private function makeTree($data)
     {
-        $inputs = '';
-        foreach ($this->elements as $element) {
-            $inputs .= sprintf($this->input, $element, $element);
-        }
+        foreach ($data as $d){
+            $num = Func::quadraticArrayCount($data,['depth'=>$d['depth']]);
 
-        return sprintf($this->form, $inputs);
-    }
-
-    /**
-     * @param string $id
-     * @param string $p_id
-     * @param array $array
-     * @param $tree
-     */
-    private function makeTree($id, $p_id, &$array, &$tree)
-    {
-        if (empty($array)) {
-            return;
-        }
-
-        $left_buttun = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
-
-        if (empty($tree)) {
-            $item = array_shift($array);
-            $tree[$item[$id]] = [];
-            if (empty($array)) {
-                //无子节点
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, Func::arrayToJsonString($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
-                return;
-            } else {
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->expand,$left_buttun, $this->makeColumn($item),$this->icon['grow'], $this->branch));
-            }
-        }
-
-        foreach ($tree as $branch => &$leaves) {
-            $shoot = [];
-            foreach ($array as $key => $value) {
-                if ($value[$p_id] == $branch) {
-                    $leaves[$value[$id]] = [];
-                    unset($array[$key]);
-                    if (Func::quadraticArrayGetIndex($array, [$p_id => $value[$id]]) === false) {
-                        //无子节点
-                        $shoot[] = $this->makeBranch($value, false);
-                    } else {
-                        $shoot[] = $this->makeBranch($value);
-                    }
-                }
-            }
-
-            if (!empty($leaves) && $array) {
-                $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
-                $this->makeTree($id, $p_id, $array, $leaves);
-            } elseif (empty($leaves)) {
-                return;
-            } else {
-                $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
-            }
         }
     }
 
-    private function makeColumn($data)
-    {
-        $text = '<div class="text">%s</div>';
-        $html = '';
-        foreach ($this->column as $column){
-            $html.=sprintf($text,isset($data[$column])?$data[$column]:'');
-        }
 
-        return $html;
-    }
-
-    /**
-     * 枝
-     * @param $data
-     * @param bool $node
-     * @return string
-     */
-    private function makeBranch($data, $node = true)
-    {
-        if ($node) {
-            $left_buttun = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->expand,$left_buttun, $this->makeColumn($data),$this->icon['grow'], $this->branch);
-        }
-        return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
-    }
 }

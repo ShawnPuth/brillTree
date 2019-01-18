@@ -53,6 +53,29 @@ class Func
     }
 
     /**
+     * @param array $array
+     * @param array $params
+     * @return int
+     */
+    public static function quadraticArrayCount(array $array, array $params)
+    {
+        $count = 0;
+        foreach ($array as $item) {
+            $add = true;
+            foreach ($params as $field => $value) {
+                if ($item[$field] != $value) {
+                    $add = false;
+                }
+            }
+            if ($add) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
      * 多条件查询二维数组索引
      *
      * @param $array

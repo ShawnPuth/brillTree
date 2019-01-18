@@ -32,7 +32,7 @@
         bindClassEnvent:function (className,event,func) {
             var objs = document.getElementsByClassName(className);
             for (var i=0;i<objs.length;i++) {
-                objs[i].addEventListener(event,func);
+                objs[i].addEventListener(event,func,false);
             }
         },
         removeChildDom:function (dom) {
@@ -49,6 +49,7 @@
         },
         tree:{
             tabAnimeFlag:false,
+            tabAnimeErroNum:0,
             init:function () {
                 dendrogram.bindClassEnvent('dendrogram-adjacency-tab','click',dendrogram.tree.tab);
             },
@@ -67,7 +68,10 @@
                 var children = node.parentNode.childNodes[3];
 
                 if(dendrogram.tree.shrinkAnimeFlag){
-                    console.log('animetion is running')
+                    if(dendrogram.tree.tabAnimeErroNum > 3){
+                        window.location.reload();
+                    }
+                    dendrogram.tree.tabAnimeErroNum++;
                     return;
                 }
                 dendrogram.tree.shrinkAnimeFlag = true;
@@ -94,7 +98,8 @@
                     }
                     children.removeEventListener('animationend',callback);
                     dendrogram.tree.shrinkAnimeFlag = false;
-                });
+                    dendrogram.tree.tabAnimeErroNum = 0;
+                },false);
             }
         }
     };

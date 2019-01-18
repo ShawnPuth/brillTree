@@ -36,7 +36,7 @@ EOF;
 
     private $leaf = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d>
+    <div data-v=%s data-sign=%d class="dendrogram-adjacency-node">
             <a href="javascript:void(0);" class="dendrogram-adjacency-tab dendrogram-adjacency-node">
                 %s
              </a>
@@ -54,7 +54,7 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s>
+    <div data-v=%s class="dendrogram-adjacency-node">
          <a href="javascript:void(0);" class="dendrogram-adjacency-ban dendrogram-adjacency-node">
             %s 
          </a>

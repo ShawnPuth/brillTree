@@ -137,10 +137,10 @@ class Func
 
         switch ($order) {
             case SORT_ASC:
-                asort($new_array);
+                //ksort($new_array);
                 break;
             case SORT_DESC:
-                arsort($new_array);
+                krsort($new_array);
                 break;
         }
 

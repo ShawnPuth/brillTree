@@ -37,7 +37,7 @@ EOF;
     private $leaf = <<<EOF
 <li>
     <div data-v=%s data-sign=%d>
-            <a href="javascript:void(0);" class="dendrogram-adjacency-retract dendrogram-adjacency-node">
+            <a href="javascript:void(0);" class="dendrogram-adjacency-tab dendrogram-adjacency-node">
                 %s
              </a>
              <button class="dendrogram-button" href="#form">

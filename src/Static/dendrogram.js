@@ -48,8 +48,9 @@
             dendrogram.appendChildDom(dom,html);
         },
         tree:{
+            tabAnimeFlag:false,
             init:function () {
-                dendrogram.bindClassEnvent('dendrogram-adjacency-retract','click',dendrogram.tree.shrink);
+                dendrogram.bindClassEnvent('dendrogram-adjacency-tab','click',dendrogram.tree.tab);
             },
             addForm:function () {
 
@@ -60,26 +61,39 @@
             delete:function () {
                 
             },
-            shrink:function () {
+            tab:function () {
                 var node = this.parentNode;
                 var sign = node.getAttribute('data-sign');
                 var children = node.parentNode.childNodes[3];
 
+                if(dendrogram.tree.shrinkAnimeFlag){
+                    return;
+                }
+                dendrogram.tree.shrinkAnimeFlag = true;
+
                 if(sign == 0){//open
                     dendrogram.relpaceChild(this,dendrogram.icon_data.shrink);
                     node.setAttribute('data-sign',1);
-                    sign = 1;
                     children.setAttribute('style', 'display:block');
                     children.classList.remove('dendrogram-animation-reverse');
                     children.classList.add('dendrogram-animation-slide-top-small');
                 }else {//shut
                     dendrogram.relpaceChild(this, dendrogram.icon_data.expand);
                     node.setAttribute('data-sign', 0);
-                    sign = 0;
                     children.classList.remove('dendrogram-animation-slide-top-small');
-                    children.classList.add('dendrogram-animation-reverse');
-                    children.setAttribute('style', 'display:none');
+                    var t = setTimeout(function(){
+                        children.classList.add('dendrogram-animation-reverse');
+                    },0);
                 }
+
+                children.addEventListener('animationend',function callback(){
+                    if(sign == 1) {
+                        children.setAttribute('style', 'display:none');
+                        clearTimeout(t);
+                    }
+                    children.removeEventListener('animationend',callback);
+                    dendrogram.tree.shrinkAnimeFlag = false;
+                });
             }
         }
     };

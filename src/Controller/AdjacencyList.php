@@ -8,7 +8,6 @@
 
 namespace DenDroGram\Controller;
 
-
 use DenDroGram\Helpers\Func;
 use DenDroGram\ViewModel\AdjacencyListViewModel;
 

@@ -11,6 +11,6 @@ test1();
 
 function test1()
 {
-    //\DenDroGram\Controller\NestedSet::buildTree();
-   echo \DenDroGram\Controller\AdjacencyList::buildTree(true);
+   echo \DenDroGram\Controller\NestedSet::buildTree();
+   //echo \DenDroGram\Controller\AdjacencyList::buildTree(true);
 }

@@ -37,13 +37,13 @@ EOF;
     private $leaf = <<<EOF
 <li>
     <div data-v=%s data-sign=%d class="dendrogram-adjacency-node">
-            <a href="javascript:void(0);" class="dendrogram-adjacency-tab dendrogram-adjacency-node">
+            <a href="javascript:void(0);" class="dendrogram-tab dendrogram-adjacency-node">
                 %s
              </a>
              <button class="dendrogram-button" href="#form">
                 %s
              </button>
-         <a href="#form" class="dendrogram-adjacency-grow">
+         <a href="#form" class="dendrogram-grow">
             %s   
          </a>
          <div class="clear_both"></div>
@@ -55,13 +55,13 @@ EOF;
     private $leaf_apex = <<<EOF
 <li>
     <div data-v=%s class="dendrogram-adjacency-node">
-         <a href="javascript:void(0);" class="dendrogram-adjacency-ban dendrogram-adjacency-node">
+         <a href="javascript:void(0);" class="dendrogram-ban dendrogram-adjacency-node">
             %s 
          </a>
              <button class="dendrogram-button" href="#form">
                 %s
              </button>
-         <a href="#form" class="dendrogram-adjacency-grow">
+         <a href="#form" class="dendrogram-grow">
             %s
          </a>
          <div class="clear_both"></div>
@@ -133,7 +133,7 @@ EOF;
             return;
         }
 
-        $left_buttun = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
+        $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
 
         if (empty($tree)) {
             $item = array_shift($array);
@@ -143,7 +143,7 @@ EOF;
                 $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, Func::arrayToJsonString($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
                 return;
             } else {
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->expand,$left_buttun, $this->makeColumn($item),$this->icon['grow'], $this->branch));
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->expand,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
             }
         }
 
@@ -193,8 +193,8 @@ EOF;
     private function makeBranch($data, $node = true)
     {
         if ($node) {
-            $left_buttun = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->expand,$left_buttun, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+            $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
+            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->expand,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
         }
         return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }

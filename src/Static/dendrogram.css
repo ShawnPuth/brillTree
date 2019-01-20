@@ -2,10 +2,6 @@
     clear: both;
 }
 html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;font-size: 14px;}
-.dendrogram{
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 12px;
-}
 
 .dendrogram .text{
     width: 80px;height: 30px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;display: inline-block;
@@ -49,6 +45,34 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     border: 1px solid #bababa;
 }
 
+.dendrogram-tab{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:10px 0 0 10px;
+}
+
+.dendrogram-ban{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #000000;
+    border-radius:10px 0 0 10px;
+}
+
+.dendrogram-grow{
+    float: left;
+    display: block;
+    width: 20px;
+    height: 40px;
+    background-color: #1e87f0;
+    border-radius:0 10px 10px 0;
+}
+
+/*adjacency*/
 .dendrogram-adjacency-node{
     position: relative;
     z-index: 1;
@@ -75,32 +99,6 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     margin-top: 20px;
 }
 
-.dendrogram-adjacency-tab{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #1e87f0;
-    border-radius:10px 0 0 10px;
-}
-
-.dendrogram-adjacency-ban{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #000000;
-    border-radius:10px 0 0 10px;
-}
-
-.dendrogram-adjacency-grow{
-    float: left;
-    display: block;
-    width: 20px;
-    height: 40px;
-    background-color: #1e87f0;
-    border-radius:0 10px 10px 0;
-}
 .dendrogram-adjacency-tab:hover,.dendrogram-adjacency-grow:hover{
     background-color: #0f7ae5;
 }
@@ -122,6 +120,71 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 
 .dendrogram-adjacency-list li:nth-child(n+2){
     margin-top: 10px;
+}
+
+/*nested*/
+.dendrogram-nested ul {
+    padding: 20px 0 0 0;
+    position: relative;
+}
+
+.dendrogram-nested li {
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.dendrogram-nested li::before, .dendrogram-nested li::after{
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-top: 1px solid #ccc;
+    width: 50%; height: 20px;
+}
+.dendrogram-nested li::after{
+    right: auto; left: 50%;
+    border-left: 1px solid #ccc;
+}
+
+.dendrogram-nested li:only-child::after, .dendrogram-nested li:only-child::before {
+    display: none;
+}
+
+.dendrogram-nested li:only-child{ padding-top: 0;}
+
+.dendrogram-nested li:first-child::before, .dendrogram-nested li:last-child::after{
+    border: 0 none;
+}
+
+.dendrogram-nested li:last-child::before{
+    border-right: 1px solid #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+.dendrogram-nested li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+
+.dendrogram-nested ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 1px solid #ccc;
+    width: 0; height: 20px;
+}
+
+.dendrogram-nested-branch{
+    display: inline-block;
+}
+
+.dendrogram-nested .dendrogram-icon{
+    left: 0;
 }
 
 /*anime*/

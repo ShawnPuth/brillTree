@@ -8,7 +8,6 @@
 
 namespace DenDroGram\ViewModel;
 
-
 use DenDroGram\Helpers\Func;
 
 class NestedSetViewModel
@@ -26,11 +25,43 @@ class NestedSetViewModel
         'ban'=>'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
     ];
 
+    private $root = <<<EOF
+<ul>%s</ul>
+EOF;
+
+    private $branch = <<<EOF
+<ul style="display:%s">%s</ul>
+EOF;
+
+    private $leaf = <<<EOF
+<li>
+    <div data-v=%s data-sign=%d>
+            <a href="javascript:void(0);" class="%s">
+                %s
+             </a>
+             <button class="dendrogram-button" href="#form">
+                %s
+             </button>
+         <a href="#form" class="dendrogram-grow">
+            %s   
+         </a>
+         <div class="clear_both"></div>
+    </div>
+    %s
+</li>
+EOF;
+
     public function index($data,$expand,$column,$form_data)
     {
         $this->expand = $expand;
         $this->column = $column;
         $this->form_data = $form_data;
+
+        if($this->expand){
+            $this->branch = Func::firstSprintf($this->branch,'block');
+        }else{
+            $this->branch = Func::firstSprintf($this->branch,'none');
+        }
 
         $data = [
             ["id"=>1,"left"=>1,"right"=>22,"depth"=>0,"name"=>"衣服"],
@@ -49,13 +80,53 @@ class NestedSetViewModel
         return $this->tree_view;
     }
 
-    private function makeTree($data)
+    private function makeTree(&$data,$key = null)
     {
-        foreach ($data as $d){
-            $num = Func::quadraticArrayCount($data,['depth'=>$d['depth']]);
-
+        if(empty($data)){
+            return;
         }
+        $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
+
+        if(is_null($key)) {
+            $current = array_shift($data);
+            if(!$this->tree_view){
+                $this->tree_view = sprintf($this->root,sprintf($this->leaf, Func::arrayToJsonString($current),$left_button,$this->makeColumn($current),$this->icon['grow']),$this->branch);
+                $this->makeTree($data);
+            }
+            return;
+        }
+        $current = $data[$key];
+        unset($data[$key]);
+        $shoot = [
+            sprintf($this->branch,sprintf($this->leaf, Func::arrayToJsonString($current),'%s',$this->makeColumn($current),$this->icon['grow']),'%s')
+        ];
+        foreach ($data as $k=>$item){
+            if($current['depth'] == $item['depth']){
+                if($current['left'] > $item['left']){
+                    array_push($shoot,sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']),'%s');
+                }else {
+                    array_unshift($shoot,sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']),'%s');
+                }
+            }elseif ($current['depth'] > $item['depth']){
+                if($current['left'] < $item['left'] && $current['right'] > $item['right']){
+                    //child
+                    sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']);
+                    unset($data[$k]);
+                }
+            }
+            unset($data[$k]);
+            continue;
+        }
+
     }
 
-
+    private function makeColumn($data)
+    {
+        $text = '<div class="text">%s</div>';
+        $html = '';
+        foreach ($this->column as $column){
+            $html.=sprintf($text,isset($data[$column])?$data[$column]:'');
+        }
+        return $html;
+    }
 }

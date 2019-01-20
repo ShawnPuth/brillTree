@@ -51,7 +51,7 @@
             tabAnimeFlag:false,
             tabAnimeErroNum:0,
             init:function () {
-                dendrogram.bindClassEnvent('dendrogram-adjacency-tab','click',dendrogram.tree.tab);
+                dendrogram.bindClassEnvent('dendrogram-tab','click',dendrogram.tree.tab);
             },
             addForm:function () {
 

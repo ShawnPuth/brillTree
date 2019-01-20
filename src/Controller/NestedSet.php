@@ -8,7 +8,6 @@
 
 namespace DenDroGram\Controller;
 
-
 use DenDroGram\Helpers\Func;
 use DenDroGram\ViewModel\NestedSetViewModel;
 
@@ -17,28 +16,12 @@ class NestedSet implements Structure
     private static $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
+<div class="dendrogram dendrogram-nested">
 %s
+</div>
 <script>
 dendrogram.tree.init();
 </script>
-EOF;
-
-    private $leaf = <<<EOF
-<li>
-    <div data-v=%s data-sign=%d>
-            <a href="javascript:void(0);" class="dendrogram-adjacency-retract dendrogram-adjacency-node">
-                %s
-             </a>
-             <button class="dendrogram-button" href="#form">
-                %s
-             </button>
-         <a href="#form" class="dendrogram-adjacency-grow">
-            %s   
-         </a>
-         <div class="clear_both"></div>
-    </div>
-    %s
-</li>
 EOF;
 
     /**

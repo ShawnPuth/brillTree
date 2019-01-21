@@ -16,8 +16,9 @@ class NestedSet implements Structure
     private static $view = <<<EOF
 <style>%s</style>
 <script>%s</script>
-<div class="dendrogram dendrogram-nested">
+<div class="dendrogram dendrogram-nested dendrogram-animation-fade">
 %s
+<div class="clear_both"></div>
 </div>
 <script>
 dendrogram.tree.init();

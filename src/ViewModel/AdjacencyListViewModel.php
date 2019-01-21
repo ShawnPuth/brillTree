@@ -15,7 +15,7 @@ class AdjacencyListViewModel
 {
     private $tree_view;
 
-    private $expand;
+    private $sign;
     private $column;
     private $form_data;
 
@@ -94,13 +94,13 @@ EOF;
 </div>
 EOF;
 
-    public function index($data,$expand,$column,$form_data)
+    public function index($data,$sign,$column,$form_data)
     {
-        $this->expand = $expand;
+        $this->sign = $sign;
         $this->column = $column;
         $this->form_data = $form_data;
 
-        if($this->expand){
+        if($this->sign){
             $this->branch = Func::firstSprintf($this->branch,'block');
         }else{
             $this->branch = Func::firstSprintf($this->branch,'none');
@@ -133,7 +133,7 @@ EOF;
             return;
         }
 
-        $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
+        $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
 
         if (empty($tree)) {
             $item = array_shift($array);
@@ -143,7 +143,7 @@ EOF;
                 $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, Func::arrayToJsonString($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
                 return;
             } else {
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->expand,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->sign,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
             }
         }
 

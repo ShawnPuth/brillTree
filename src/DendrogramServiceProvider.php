@@ -31,6 +31,7 @@ class DendrogramServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishConfig();
+        $this->loadMigrations();
         $this->setupConfig();
     }
 
@@ -64,12 +65,29 @@ class DendrogramServiceProvider extends ServiceProvider
     }
 
     /**
+     * Load migrations.
+     */
+    protected function loadMigrations()
+    {
+        $path = $this->getMigrationsPath();
+        $this->loadMigrationsFrom($path);
+    }
+
+    /**
      * Setup config.
      */
     protected function setupConfig()
     {
         $path = $this->getConfigPath();
         $this->mergeConfigFrom($path, 'dendrogram');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMigrationsPath()
+    {
+        return realpath(__DIR__ . '/../database/migrations/');
     }
 
     /**

@@ -9,12 +9,12 @@
 namespace DenDroGram\Model;
 
 
-class AdjacencyListModel extends Model
+class NestedSetModel extends Model
 {
     /**
      * @var string 
      */
-    protected $table = 'dendrogram_adjacency';
+    protected $table = 'dendrogram_nested';
 
     /**
      * @var bool 

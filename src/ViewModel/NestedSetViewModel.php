@@ -14,7 +14,7 @@ class NestedSetViewModel
 {
     private $tree_view;
 
-    private $expand;
+    private $sign;
     private $column;
     private $form_data;
 
@@ -35,8 +35,8 @@ EOF;
 
     private $leaf = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d>
-            <a href="javascript:void(0);" class="%s">
+    <div data-v=%s data-sign=%d class="dendrogram-nested-branch">
+            <a href="javascript:void(0);" class="dendrogram-tab">
                 %s
              </a>
              <button class="dendrogram-button" href="#form">
@@ -51,13 +51,30 @@ EOF;
 </li>
 EOF;
 
-    public function index($data,$expand,$column,$form_data)
+    private $leaf_apex = <<<EOF
+<li>
+    <div data-v=%s class="dendrogram-nested-branch">
+         <a href="javascript:void(0);" class="dendrogram-ban">
+            %s 
+         </a>
+             <button class="dendrogram-button" href="#form">
+                %s
+             </button>
+         <a href="#form" class="dendrogram-grow">
+            %s
+         </a>
+         <div class="clear_both"></div>
+    </div>
+</li>
+EOF;
+
+    public function index($data,$sign,$column,$form_data)
     {
-        $this->expand = $expand;
+        $this->sign = $sign;
         $this->column = $column;
         $this->form_data = $form_data;
 
-        if($this->expand){
+        if($this->sign){
             $this->branch = Func::firstSprintf($this->branch,'block');
         }else{
             $this->branch = Func::firstSprintf($this->branch,'none');
@@ -75,49 +92,71 @@ EOF;
             ["id"=>9,"left"=>19,"right"=>20,"depth"=>2,"name"=>"开衫"],
         ];
 
-        $this->makeTree($data);
+        $this->makeTree($data,$tree);
 
         return $this->tree_view;
     }
 
-    private function makeTree(&$data,$key = null)
+    /**
+     * @param $array
+     * @param array $tree
+     */
+    private function makeTree(&$array, &$tree = [])
     {
-        if(empty($data)){
+        if(empty($array)){
             return;
         }
-        $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
 
-        if(is_null($key)) {
-            $current = array_shift($data);
-            if(!$this->tree_view){
-                $this->tree_view = sprintf($this->root,sprintf($this->leaf, Func::arrayToJsonString($current),$left_button,$this->makeColumn($current),$this->icon['grow']),$this->branch);
-                $this->makeTree($data);
+        if (empty($tree)) {
+            $item = array_shift($array);
+            $item['children'] = [];
+            $tree[] = $item;
+            if (empty($array)) {
+                //no children
+                $this->tree_view = sprintf($this->root,
+                    sprintf($this->leaf_apex,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['expand'],$this->makeColumn($item),$this->icon['grow'],''));
+                return;
+            } else {
+                $this->tree_view = sprintf($this->root,
+                    sprintf($this->leaf,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],$this->branch));
             }
-            return;
-        }
-        $current = $data[$key];
-        unset($data[$key]);
-        $shoot = [
-            sprintf($this->branch,sprintf($this->leaf, Func::arrayToJsonString($current),'%s',$this->makeColumn($current),$this->icon['grow']),'%s')
-        ];
-        foreach ($data as $k=>$item){
-            if($current['depth'] == $item['depth']){
-                if($current['left'] > $item['left']){
-                    array_push($shoot,sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']),'%s');
-                }else {
-                    array_unshift($shoot,sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']),'%s');
-                }
-            }elseif ($current['depth'] > $item['depth']){
-                if($current['left'] < $item['left'] && $current['right'] > $item['right']){
-                    //child
-                    sprintf($this->leaf, Func::arrayToJsonString($item),$this->icon['ban'], '%s',$this->makeColumn($item),$this->icon['grow']);
-                    unset($data[$k]);
-                }
-            }
-            unset($data[$k]);
-            continue;
         }
 
+        foreach ($tree as &$branch) {
+            $shoot = [];
+            foreach ($array as $key => $value) {
+                if (($branch['depth'] + 1) == $value['depth'] && $branch['left'] < $value['left'] && $branch['right'] > $value['left']) {
+                    $value['children'] = [];
+                    $branch['children'][] = $value;
+                    unset($array[$key]);
+                    if (!$this->hasChildren($value,$array)) {
+                        //无子节点
+                        $shoot[] = $this->makeBranch($value, false);
+                    } else {
+                        $shoot[] = $this->makeBranch($value);
+                    }
+                }
+            }
+
+            if (!empty($branch['children']) && $array) {
+                $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
+                $this->makeTree($array, $branch['children']);
+            } elseif (empty($branch['children'])) {
+                return;
+            } else {
+                $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
+            }
+        }
+    }
+
+    private function hasChildren($item,$data)
+    {
+        foreach ($data as $key => $value) {
+            if(($item['depth'] + 1) == $value['depth'] && $item['left'] < $value['left'] && $item['right'] > $value['right']){
+                return true;
+            }
+        }
+        return false;
     }
 
     private function makeColumn($data)
@@ -128,5 +167,20 @@ EOF;
             $html.=sprintf($text,isset($data[$column])?$data[$column]:'');
         }
         return $html;
+    }
+
+    /**
+     * 枝
+     * @param $data
+     * @param bool $node
+     * @return string
+     */
+    private function makeBranch($data, $node = true)
+    {
+        if ($node) {
+            $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
+            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+        }
+        return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }
 }

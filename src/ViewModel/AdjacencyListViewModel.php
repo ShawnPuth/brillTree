@@ -193,8 +193,8 @@ EOF;
     private function makeBranch($data, $node = true)
     {
         if ($node) {
-            $left_button = $this->expand ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->expand,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+            $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
+            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
         }
         return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }

@@ -9,6 +9,7 @@
 namespace DenDroGram\Controller;
 
 use DenDroGram\Helpers\Func;
+use DenDroGram\Model\AdjacencyListModel;
 use DenDroGram\ViewModel\AdjacencyListViewModel;
 
 class AdjacencyList implements Structure
@@ -33,13 +34,18 @@ EOF;
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
 
-        $data = [
+        /*$data = [
      ["id"=>1,"p_id"=>0,"name"=>"中国"],
      ["id"=>2,"p_id"=>1,"name"=>"四川"],
      ["id"=>3,"p_id"=>1,"name"=>"北京"],
      ["id"=>4,"p_id"=>2,"name"=>"成都"],
      ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
-            ];
+            ];*/
+        $result = AdjacencyListModel::orderBy('p_id','ASC')->get();
+        $data = [];
+        if($result){
+            $data = $result->toArray();
+        }
 
         $html = (new AdjacencyListViewModel())->index($data,$expand,$column,$form_data);
 

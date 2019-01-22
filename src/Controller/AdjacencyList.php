@@ -73,7 +73,7 @@ EOF;
             ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
         ];
 
-        Func::quadraticArrayToTreeData('id','p_id','children',0,$data,$tree);
+        $tree = Func::quadraticArrayToTreeData($data,'id','p_id','children');
         return $tree;
     }
 

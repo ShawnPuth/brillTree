@@ -208,30 +208,27 @@ class Func
     }
 
     /**
+     * @param array $lists
      * @param $id_name
      * @param $p_id_name
-     * @param $children
-     * @param $p_id
-     * @param $array
-     * @param array $tree
+     * @param string $childKey
      * @return array
      */
-    public static function quadraticArrayToTreeData($id_name, $p_id_name,$children,$p_id,$array, &$tree = [])
+    public static function quadraticArrayToTreeData(array $lists,$id_name, $p_id_name,$childKey = 'children')
     {
-        if (!empty($array)) {
-            $newList = [];
-            foreach ($array as $k => $v) {
-                $newList[$v[$id_name]] = $v;
-            }
-            foreach ($newList as $value) {
-                if ($p_id == $value[$p_id_name]) {
-                    $tree[] = &$newList[$value[$id_name]];
-                } elseif (isset($newList[$value[$p_id_name]])) {
-                    $newList[$value[$p_id_name]][$children][] = &$newList[$value[$id_name]];
-                }
+        $map = [];
+        $res = [];
+        foreach ($lists as $id => &$item) {
+            $pid = &$item[$p_id_name];
+            $map[$item[$id_name]] = &$item;
+            if (!isset($map[$pid])) {
+                $res[$id] = &$item;
+            } else {
+                $pItem = &$map[$pid];
+                $pItem[$childKey][] = &$item;
             }
         }
-        return $tree;
+        return $res;
     }
 
     /**

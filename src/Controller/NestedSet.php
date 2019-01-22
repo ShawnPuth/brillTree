@@ -30,10 +30,10 @@ EOF;
     /**
      * @param bool $expand
      * @param array $column
-     * @param array $form_data
-     * @return mixed|string
+     * @param string $form_content
+     * @return string
      */
-    public static function buildTree($expand = true,array $column = ['name'],array $form_data = ['name'])
+    public static function buildTree($expand = true,array $column = ['name'],$form_content = '')
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
@@ -43,7 +43,7 @@ EOF;
         if($result){
             $data = $result->toArray();
         }
-        $html = (new NestedSetViewModel())->index($data,$expand,$column,$form_data);
+        $html = (new NestedSetViewModel($expand,$column,$form_content))->index($data);
         return sprintf(self::$view,$css,$js,$html);
     }
 

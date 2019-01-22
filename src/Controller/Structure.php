@@ -14,10 +14,10 @@ interface Structure
     /**
      * @param bool $expand
      * @param array $column
-     * @param array $form_data
+     * @param string $form_content
      * @return mixed
      */
-    public static function buildTree($expand = true,array $column = ['name'],array $form_data = ['name']);
+    public static function buildTree($expand = true,array $column = ['name'],$form_content = '');
 
     /**
      * @return mixed

@@ -64,7 +64,10 @@
             mongolia:function(flag){
                 if(flag){
                     document.getElementById('mongolia').setAttribute('style','display:block;opacity:1');
-                    document.getElementById('dendrogram-form').setAttribute('style', 'display:block;opacity:1');
+                    document.getElementById('dendrogram-form').setAttribute('style', 'display:block;');
+                    setTimeout(function () {
+                        document.getElementById('dendrogram-form').setAttribute('style', 'opacity:1');
+                    },0);
                     return;
                 }
                 document.getElementById('mongolia').setAttribute('style','display:none;opacity:0');

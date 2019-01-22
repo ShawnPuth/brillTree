@@ -15,7 +15,24 @@ abstract class ViewModel
 
     protected $sign;
     protected $column;
-    protected $form_data;
+    protected $form_content;
+    protected $form = <<<EOF
+<div id="dendrogram-form">
+    <button id="dendrogram-form-close" type="button">
+    <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" data-svg="close-icon"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"></line></svg>
+    </button>
+    <div class="dendrogram-form-header">
+        <h2 id="dendrogram-form-theme"></h2>
+    </div>
+    <div class="dendrogram-form-body">
+        %s
+    </div>
+    <div class="dendrogram-form-footer"> 
+        <button class="delete" type="button">删除</button>
+        <button class="conserve" type="button">保存</button>
+    </div>
+</div>
+EOF;
 
     protected $icon = [
         'expand'=>'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"> <circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle> <line fill="none" stroke="#fff" x1="9.5" y1="5" x2="9.5" y2="14"></line> <line fill="none" stroke="#fff" x1="5" y1="9.5" x2="14" y2="9.5"></line></svg></span>',
@@ -24,7 +41,14 @@ abstract class ViewModel
         'ban'=>'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
     ];
 
-    public function index($data,$sign,$column,$form_data){
+    public function __construct($sign,$column,$form_content)
+    {
+        $this->sign = $sign;
+        $this->column = $column;
+        $this->form_content = $form_content;
+    }
+
+    public function index($data){
 
     }
 }

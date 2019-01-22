@@ -57,55 +57,22 @@ EOF;
 </li>
 EOF;
 
-    private $form = <<<EOF
-<div id="dendrogram-form">
-    <button id="dendrogram-form-close" type="button">
-    <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" data-svg="close-icon"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"></line></svg>
-    </button>
-    <div class="dendrogram-form-header">
-        <h2 id="dendrogram-form-theme"></h2>
-    </div>
-    <div class="dendrogram-form-body">
-        %s
-    </div>
-    <div class="dendrogram-form-footer"> 
-        <button class="delete" type="button">删除</button>
-        <button class="conserve" type="button">保存</button>
-    </div>
-</div>
-EOF;
-
-    private $input = <<<EOF
-<div class="uk-margin">
-     <input class="uk-input" type="text" placeholder="%s" name="%s" value="">
-</div>
-EOF;
-
-    public function index($data,$sign,$column,$form_data)
+    public function __construct($sign, $column, $form_data)
     {
-        $this->sign = $sign;
-        $this->column = $column;
-        $this->form_data = $form_data;
+        parent::__construct($sign, $column, $form_data);
+    }
 
+    public function index($data)
+    {
         if($this->sign){
             $this->branch = Func::firstSprintf($this->branch,'block');
         }else{
             $this->branch = Func::firstSprintf($this->branch,'none');
         }
-
+        $struct = $this->getDataStruct($data);
         $this->makeTree('id', 'p_id', $data, $tree);
-        $this->tree_view = $this->tree_view.$this->makeForm();
+        $this->makeForm($struct);
         return $this->tree_view;
-    }
-
-    private function makeForm()
-    {
-        $inputs = '';
-        foreach ($this->form_data as $element) {
-            $inputs .= sprintf($this->input, $element, $element);
-        }
-
-        return sprintf($this->form, $inputs);
     }
 
     /**
@@ -158,6 +125,25 @@ EOF;
                 $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
             }
         }
+    }
+
+    private function getDataStruct($data)
+    {
+        $item = current($data);
+        return array_keys($item);
+    }
+
+    private function makeForm($struct)
+    {
+        if($this->form_content){
+            $this->tree_view = $this->tree_view.sprintf($this->form,$this->form_content);
+            return;
+        }
+        $input = '<input class="dendrogram-input" name="%s" value="%s">';
+        foreach ($struct as $item){
+            $this->form_content.=sprintf($input,$item,'{'.$item.'}');
+        }
+        $this->tree_view = $this->tree_view.sprintf($this->form,$this->form_content);
     }
 
     private function makeColumn($data)

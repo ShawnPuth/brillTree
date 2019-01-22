@@ -55,30 +55,13 @@ EOF;
 </li>
 EOF;
 
-    private $form = <<<EOF
-<div id="form">
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-default" type="button"></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Headline</h2>
-        </div>
-        <div class="uk-modal-body">
-            %s
-        </div>
-        <div class="uk-modal-footer uk-text-right"> 
-            <button class="uk-button uk-button-danger" type="button">删除</button>
-            <button class="uk-button uk-button-primary" type="button">保存</button>
-        </div>
-    </div>
-</div>
-EOF;
-
-    public function index($data,$sign,$column,$form_data)
+    public function __construct($sign, $column, $form_content)
     {
-        $this->sign = $sign;
-        $this->column = $column;
-        $this->form_data = $form_data;
+        parent::__construct($sign, $column, $form_content);
+    }
 
+    public function index($data)
+    {
         if($this->sign){
             $this->branch = Func::firstSprintf($this->branch,'block');
         }else{

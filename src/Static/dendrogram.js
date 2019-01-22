@@ -52,12 +52,31 @@
             tabAnimeErroNum:0,
             init:function () {
                 dendrogram.bindClassEnvent('dendrogram-tab','click',dendrogram.tree.tab);
+                dendrogram.bindClassEnvent('dendrogram-button','click',dendrogram.tree.upForm);
+                dendrogram.bindClassEnvent('dendrogram-grow','click',dendrogram.tree.addForm);
+                document.getElementById('mongolia').onclick = function () {
+                    dendrogram.tree.mongolia(false);
+                }
+                document.getElementById('dendrogram-form-close').onclick = function () {
+                    dendrogram.tree.mongolia(false);
+                }
+            },
+            mongolia:function(flag){
+                if(flag){
+                    document.getElementById('mongolia').setAttribute('style','display:block;opacity:1');
+                    document.getElementById('dendrogram-form').setAttribute('style', 'display:block;opacity:1');
+                    return;
+                }
+                document.getElementById('mongolia').setAttribute('style','display:none;opacity:0');
+                document.getElementById('dendrogram-form').setAttribute('style', 'display:none;opacity:0');
             },
             addForm:function () {
-
+                dendrogram.tree.mongolia(true);
+                document.getElementById('dendrogram-form-theme').innerText = '增加结点';
             },
             upForm:function () {
-
+                dendrogram.tree.mongolia(true);
+                document.getElementById('dendrogram-form-theme').innerText = '修改结点';
             },
             delete:function () {
                 

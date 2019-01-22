@@ -18,6 +18,7 @@ class AdjacencyList implements Structure
 <style>%s</style>
 <script>%s</script>
 %s
+<div id="mongolia"></div>
 <script>
 dendrogram.tree.init();
 </script>

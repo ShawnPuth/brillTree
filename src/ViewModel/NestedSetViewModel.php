@@ -26,7 +26,7 @@ EOF;
             <a href="javascript:void(0);" class="dendrogram-tab">
                 %s
              </a>
-             <button class="dendrogram-button" href="#form">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -44,7 +44,7 @@ EOF;
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s 
          </a>
-             <button class="dendrogram-button" href="#form">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -53,6 +53,24 @@ EOF;
          <div class="clear_both"></div>
     </div>
 </li>
+EOF;
+
+    private $form = <<<EOF
+<div id="form">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button"></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title">Headline</h2>
+        </div>
+        <div class="uk-modal-body">
+            %s
+        </div>
+        <div class="uk-modal-footer uk-text-right"> 
+            <button class="uk-button uk-button-danger" type="button">删除</button>
+            <button class="uk-button uk-button-primary" type="button">保存</button>
+        </div>
+    </div>
+</div>
 EOF;
 
     public function index($data,$sign,$column,$form_data)

@@ -21,6 +21,7 @@ class NestedSet implements Structure
 %s
 <div class="clear_both"></div>
 </div>
+<div id="mongolia"></div>
 <script>
 dendrogram.tree.init();
 </script>

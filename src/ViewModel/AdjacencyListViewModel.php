@@ -27,7 +27,7 @@ EOF;
             <a href="javascript:void(0);" class="dendrogram-tab dendrogram-adjacency-node">
                 %s
              </a>
-             <button class="dendrogram-button" href="#form">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -45,7 +45,7 @@ EOF;
          <a href="javascript:void(0);" class="dendrogram-ban dendrogram-adjacency-node">
             %s 
          </a>
-             <button class="dendrogram-button" href="#form">
+             <button class="dendrogram-button" href="javascript:void(0);">
                 %s
              </button>
          <a href="#form" class="dendrogram-grow">
@@ -58,19 +58,19 @@ EOF;
 EOF;
 
     private $form = <<<EOF
-<div id="form">
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-default" type="button"></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title">Headline</h2>
-        </div>
-        <div class="uk-modal-body">
-            %s
-        </div>
-        <div class="uk-modal-footer uk-text-right"> 
-            <button class="uk-button uk-button-danger" type="button">删除</button>
-            <button class="uk-button uk-button-primary" type="button">保存</button>
-        </div>
+<div id="dendrogram-form">
+    <button id="dendrogram-form-close" type="button">
+    <svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg" data-svg="close-icon"><line fill="none" stroke="#000" stroke-width="1.1" x1="1" y1="1" x2="13" y2="13"></line><line fill="none" stroke="#000" stroke-width="1.1" x1="13" y1="1" x2="1" y2="13"></line></svg>
+    </button>
+    <div class="dendrogram-form-header">
+        <h2 id="dendrogram-form-theme"></h2>
+    </div>
+    <div class="dendrogram-form-body">
+        %s
+    </div>
+    <div class="dendrogram-form-footer"> 
+        <button class="delete" type="button">删除</button>
+        <button class="conserve" type="button">保存</button>
     </div>
 </div>
 EOF;
@@ -94,14 +94,14 @@ EOF;
         }
 
         $this->makeTree('id', 'p_id', $data, $tree);
-        //$this->tree_view = $this->tree_view.$this->makeForm();
+        $this->tree_view = $this->tree_view.$this->makeForm();
         return $this->tree_view;
     }
 
     private function makeForm()
     {
         $inputs = '';
-        foreach ($this->elements as $element) {
+        foreach ($this->form_data as $element) {
             $inputs .= sprintf($this->input, $element, $element);
         }
 

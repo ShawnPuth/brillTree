@@ -66,8 +66,8 @@ EOF;
     public static function getTreeData()
     {
         $data = [
-            ["id"=>1,"p_id"=>0,"name"=>"中国"],
             ["id"=>2,"p_id"=>1,"name"=>"四川"],
+            ["id"=>1,"p_id"=>0,"name"=>"中国"],
             ["id"=>3,"p_id"=>1,"name"=>"北京"],
             ["id"=>4,"p_id"=>2,"name"=>"成都"],
             ["id"=>5,"p_id"=>2,"name"=>"绵阳"]

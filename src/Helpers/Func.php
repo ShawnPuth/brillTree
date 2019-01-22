@@ -160,7 +160,7 @@ class Func
 
         switch ($order) {
             case SORT_ASC:
-                //ksort($new_array);
+                ksort($new_array);
                 break;
             case SORT_DESC:
                 krsort($new_array);
@@ -216,6 +216,7 @@ class Func
      */
     public static function quadraticArrayToTreeData(array $lists,$id_name, $p_id_name,$childKey = 'children')
     {
+        $lists = self::quadraticArraySort($lists,$p_id_name);
         $map = [];
         $res = [];
         foreach ($lists as $id => &$item) {

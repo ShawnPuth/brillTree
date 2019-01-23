@@ -25,4 +25,26 @@ class NestedSetModel extends Model
      * @var array 
      */
     protected $guarded = ['id'];
+
+    public static function getChildren($id)
+    {
+        $child = self::where('id',$id)->first();
+        if(!$child){
+            return [];
+        }
+        $left = $child->left;
+        $right = $child->right;
+        $depth = $child->depth;
+        $children = self::where([
+            ['depth','>=',$depth],
+            ['left','>=',$left],
+            ['right','<=',$right]
+        ])->get();
+        if(!$children){
+            return [$child->toArray()];
+        }
+        $children = $children->toArray();
+        array_unshift($children,$child);
+        return $children;
+    }
 }

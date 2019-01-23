@@ -19,61 +19,45 @@ class AdjacencyList implements Structure
 <script>%s</script>
 %s
 <div id="mongolia"></div>
-<script>
-dendrogram.tree.init();
-</script>
+<script>dendrogram.tree.init();</script>
 EOF;
 
     /**
+     * @param $id
      * @param bool $expand
      * @param array $column
+     * @param string $form_action
      * @param string $form_content
      * @return string
      */
-    public static function buildTree($expand = true,array $column = ['name'],$form_content = '')
+    public static function buildTree($id, $expand = true, array $column = ['name'], $form_action = '', $form_content = '')
     {
-        $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
-        $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
+        $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
+        $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
+        if($form_action){
+            sprintf($js,$form_action);
+        }
 
-        $result = AdjacencyListModel::orderBy('p_id','ASC')->orderBy('sort','DESC')->get();
+        $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
+        $result = AdjacencyListModel::where('p_id', '<=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
         $data = [];
-        if($result){
+        if ($result) {
             $data = $result->toArray();
         }
 
-        $html = (new AdjacencyListViewModel($expand,$column,$form_content))->index($data);
-
-        return sprintf(self::$view,$css,$js,$html);
+        $html = (new AdjacencyListViewModel($expand, $column, $form_content))->index($data);
+        return sprintf(self::$view, $css, $js, $html);
     }
 
     /**
-     * @return mixed
+     * @param $id
+     * @return array
      */
-    public static function getTreeStructure()
+    public static function getTreeData($id)
     {
-        $data = [
-            ["id"=>1,"p_id"=>0,"name"=>"中国"],
-            ["id"=>2,"p_id"=>1,"name"=>"四川"],
-            ["id"=>3,"p_id"=>1,"name"=>"北京"],
-            ["id"=>4,"p_id"=>2,"name"=>"成都"],
-            ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
-        ];
-
-        Func::quadraticArrayToTreeStructure('id','p_id',$data,$tree);
-        return $tree;
-    }
-
-    public static function getTreeData()
-    {
-        $data = [
-            ["id"=>2,"p_id"=>1,"name"=>"四川"],
-            ["id"=>1,"p_id"=>0,"name"=>"中国"],
-            ["id"=>3,"p_id"=>1,"name"=>"北京"],
-            ["id"=>4,"p_id"=>2,"name"=>"成都"],
-            ["id"=>5,"p_id"=>2,"name"=>"绵阳"]
-        ];
-
-        $tree = Func::quadraticArrayToTreeData($data,'id','p_id','children');
+        $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
+        $data = AdjacencyListModel::where('p_id', '<=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
+        $tree = Func::quadraticArrayToTreeData($data, 'id', 'p_id', 'children');
         return $tree;
     }
 

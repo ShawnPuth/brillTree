@@ -22,23 +22,26 @@ class NestedSet implements Structure
 <div class="clear_both"></div>
 </div>
 <div id="mongolia"></div>
-<script>
-dendrogram.tree.init();
-</script>
+<script>dendrogram.tree.init();</script>
 EOF;
 
     /**
+     * @param $id
      * @param bool $expand
      * @param array $column
+     * @param string $form_action
      * @param string $form_content
      * @return string
      */
-    public static function buildTree($expand = true,array $column = ['name'],$form_content = '')
+    public static function buildTree($id,$expand = true,array $column = ['name'],$form_action='',$form_content = '')
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
+        if($form_action){
+            sprintf($js,$form_action);
+        }
 
-        $result = NestedSetModel::get();
+        $result = NestedSetModel::getChildren($id);
         $data = [];
         if($result){
             $data = $result->toArray();
@@ -47,15 +50,7 @@ EOF;
         return sprintf(self::$view,$css,$js,$html);
     }
 
-    /**
-     * @return mixed
-     */
-    public static function getTreeStructure()
-    {
-
-    }
-
-    public static function getTreeData()
+    public static function getTreeData($id)
     {
 
     }

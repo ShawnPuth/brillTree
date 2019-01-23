@@ -48,6 +48,7 @@
             dendrogram.appendChildDom(dom,html);
         },
         tree:{
+            form_action:'%s',
             tabAnimeFlag:false,
             tabAnimeErroNum:0,
             init:function () {

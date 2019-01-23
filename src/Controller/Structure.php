@@ -12,22 +12,20 @@ namespace DenDroGram\Controller;
 interface Structure
 {
     /**
+     * @param $id
      * @param bool $expand
      * @param array $column
+     * @param string $form_action
      * @param string $form_content
      * @return mixed
      */
-    public static function buildTree($expand = true,array $column = ['name'],$form_content = '');
+    public static function buildTree($id, $expand = true, array $column = ['name'], $form_action = '', $form_content = '');
 
     /**
+     * @param $id
      * @return mixed
      */
-    public static function getTreeStructure();
-
-    /**
-     * @return mixed
-     */
-    public static function getTreeData();
+    public static function getTreeData($id);
 
     /**
      * @return mixed

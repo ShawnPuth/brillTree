@@ -41,11 +41,7 @@ EOF;
             sprintf($js,$form_action);
         }
 
-        $result = NestedSetModel::getChildren($id);
-        $data = [];
-        if($result){
-            $data = $result->toArray();
-        }
+        $data = NestedSetModel::getChildren($id);
         $html = (new NestedSetViewModel($expand,$column,$form_content))->index($data);
         return sprintf(self::$view,$css,$js,$html);
     }

@@ -39,7 +39,7 @@ EOF;
         }
 
         $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
-        $result = AdjacencyListModel::where('p_id', '<=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
+        $result = AdjacencyListModel::where('p_id', '>=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
         $data = [];
         if ($result) {
             $data = $result->toArray();

@@ -44,7 +44,7 @@ class NestedSetModel extends Model
             return [$child->toArray()];
         }
         $children = $children->toArray();
-        array_unshift($children,$child);
+        array_unshift($children,$child->toArray());
         return $children;
     }
 }

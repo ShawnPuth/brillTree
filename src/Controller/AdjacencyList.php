@@ -24,10 +24,8 @@ EOF;
 
     /**
      * @param $id
-     * @param bool $expand
      * @param array $column
-     * @param string $form_action
-     * @return string
+     * @return mixed|string
      */
     public static function buildTree($id, array $column = ['name'])
     {

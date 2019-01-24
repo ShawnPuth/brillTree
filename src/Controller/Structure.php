@@ -25,6 +25,8 @@ interface Structure
     public static function getTreeData($id);
 
     /**
+     * @param $action
+     * @param $data
      * @return mixed
      */
     public static function operateNode($action,$data);

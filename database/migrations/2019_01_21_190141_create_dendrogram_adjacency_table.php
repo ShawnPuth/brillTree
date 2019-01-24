@@ -48,7 +48,7 @@ RETURN sTemp;
 END
 //
 EOF;
-        \Illuminate\Support\Facades\DB::unprepared();
+        \Illuminate\Support\Facades\DB::unprepared($sql);
     }
 
     /**

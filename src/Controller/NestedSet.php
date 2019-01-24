@@ -8,7 +8,6 @@
 
 namespace DenDroGram\Controller;
 
-use DenDroGram\Helpers\Func;
 use DenDroGram\Model\NestedSetModel;
 use DenDroGram\ViewModel\NestedSetViewModel;
 
@@ -51,11 +50,11 @@ EOF;
     public static function operateNode($action,$data)
     {
         if($action == 'add'){
-            return AdjacencyListModel::add($data);
+            return NestedSetModel::add($data);
         }elseif ($action == 'update' && isset($data['id'])){
-            return AdjacencyListModel::where('id',$data['id'])->update($data);
+            return NestedSetModel::where('id',$data['id'])->update($data);
         }elseif ($action == 'delete' && isset($data['id'])){
-            return AdjacencyListModel::deleteAll($id);
+            return NestedSetModel::deleteAll($data['id']);
         }
         return false;
     }

@@ -9,34 +9,33 @@
             'grow': '<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" data-svg="social"><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.4" y1="14" x2="6.3" y2="10.7"></line><line fill="none" stroke="#fff" stroke-width="1.1" x1="13.5" y1="5.5" x2="6.5" y2="8.8"></line><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="4.6" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="15.5" cy="14.8" r="2.3"></circle><circle fill="none" stroke="#fff" stroke-width="1.1" cx="4.5" cy="9.8" r="2.3"></circle></svg></span> ',
             'ban': '<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
         },
-        requestEvent: {
-            apply: function (url, data, method, callback) {
-                method = typeof method !== 'undefined' ? method : 'POST';
-                callback = typeof callback == 'function' ? callback : function (d) {
-                };
+        requestEvent: function (url, data, method, callback) {
+            method = typeof method !== 'undefined' ? method : 'POST';
+            callback = typeof callback == 'function' ? callback : function (d) {
+            };
 
-                var xhr = null;
-                if (window.ActiveXObject) {
-                    xhr = new ActiveXObject("Microsoft.XMLHTTP");
-                } else if (window.XMLHttpRequest) {
-                    xhr = new XMLHttpRequest();
-                }
-
-                if (xhr == null) {
-                    return;
-                }
-                xhr.open(method, url, true);
-                if (method == 'POST') {
-                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                }
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState == 4 && xhr.status == 200) {
-                        callback(xhr.responseText);
-                    }
-                };
-                xhr.send();
+            var xhr = null;
+            if (window.ActiveXObject) {
+                xhr = new ActiveXObject("Microsoft.XMLHTTP");
+            } else if (window.XMLHttpRequest) {
+                xhr = new XMLHttpRequest();
             }
 
+            if (xhr == null) {
+                return;
+            }
+            xhr.open(method, url, true);
+            if (method == 'POST') {
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            }
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    window.location.reload();
+                    callback(xhr.responseText);
+                }
+            };
+            console.log(data)
+            xhr.send(JSON.stringify(data));
         },
         bindClassEnvent: function (className, event, func) {
             var objs = document.getElementsByClassName(className);
@@ -61,6 +60,8 @@
             return elements[0];
         },
         tree: {
+            id: 0,
+            conserve_action:'add',
             form_action: '%s',
             tabAnimeFlag: false,
             tabAnimeErroNum: 0,
@@ -74,6 +75,8 @@
                 document.getElementById('dendrogram-form-close').onclick = function () {
                     dendrogram.tree.mongolia(false);
                 }
+                dendrogram.bindClassEnvent('dendrogram-form-delete', 'click', dendrogram.tree.delete);
+                dendrogram.bindClassEnvent('dendrogram-form-conserve', 'click', dendrogram.tree.conserve);
             },
             mongolia: function (flag) {
                 if (flag) {
@@ -105,6 +108,8 @@
                     item.value = '';
                     item.placeholder = name;
                 }
+                dendrogram.tree.id = data.id;
+                dendrogram.tree.conserve_action = 'add';
             },
             upForm: function () {
                 dendrogram.tree.mongolia(true);
@@ -127,9 +132,35 @@
                         item.placeholder = name;
                     }
                 }
+                dendrogram.tree.id = data.id;
+                dendrogram.tree.conserve_action = 'update';
+            },
+            conserve: function () {
+                var elements = document.getElementsByTagName('input');
+
+                if (dendrogram.tree.conserve_action === 'add') {
+                    var data = {'p_id':dendrogram.tree.id};
+                }else {
+                    var data = {'id':dendrogram.tree.id};
+                }
+                for (var element in elements) {
+                    if (elements[element] instanceof HTMLElement && elements[element].className == 'dendrogram-input') {
+                        var name = elements[element].name;
+                        var val = elements[element].value;
+                        data[name] = val;
+                    }
+                }
+
+                dendrogram.requestEvent(dendrogram.tree.form_action, {
+                    'data': data,
+                    'action': dendrogram.tree.conserve_action
+                });
             },
             delete: function () {
-
+                dendrogram.requestEvent(dendrogram.tree.form_action, {
+                    'data': {'id': dendrogram.tree.id},
+                    'action': 'delete'
+                })
             },
             tab: function () {
                 var node = this.parentNode;

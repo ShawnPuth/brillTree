@@ -34,8 +34,8 @@ EOF;
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
-        if(config('dendrogram.form_action','')){
-            sprintf($js,$form_action);
+        if(($form_action = config('dendrogram.form_action',''))){
+            $js = sprintf($js,$form_action);
         }
 
         $data = NestedSetModel::getChildren($id);

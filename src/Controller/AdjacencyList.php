@@ -31,11 +31,10 @@ EOF;
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
-        if(config('dendrogram.form_action','')){
-            sprintf($js,$form_action);
+        if(($form_action = config('dendrogram.form_action',''))){
+            $js = sprintf($js,$form_action);
         }
 
-        $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
         $data = AdjacencyListModel::getChildren($id);
 
         $html = (new AdjacencyListViewModel($column))->index($data);
@@ -48,8 +47,7 @@ EOF;
      */
     public static function getTreeData($id)
     {
-        $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
-        $data = AdjacencyListModel::where('p_id', '<=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
+        $data = AdjacencyListModel::getChildren($id);
         $tree = Func::quadraticArrayToTreeData($data, 'id', 'p_id', 'children');
         return $tree;
     }
@@ -61,7 +59,7 @@ EOF;
         }elseif ($action == 'update' && isset($data['id'])){
             return AdjacencyListModel::where('id',$data['id'])->update($data);
         }elseif ($action == 'delete' && isset($data['id'])){
-            return AdjacencyListModel::deleteAll($id);
+            return AdjacencyListModel::deleteAll($data['id']);
         }
         return false;
     }

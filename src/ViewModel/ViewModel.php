@@ -27,8 +27,8 @@ abstract class ViewModel
         %s
     </div>
     <div class="dendrogram-form-footer"> 
-        <button class="delete" type="button">删除</button>
-        <button class="conserve" type="button">保存</button>
+        <button class="dendrogram-form-delete" type="button">删除</button>
+        <button class="dendrogram-form-conserve" type="button">保存</button>
     </div>
 </div>
 EOF;

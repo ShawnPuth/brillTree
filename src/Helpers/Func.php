@@ -258,6 +258,9 @@ class Func
                 if (!is_array($value)) {
                     $json .= "\"$name\":\"$value\",";
                     continue;
+                }elseif (empty($value)){
+                    $json .= "\"$name\":[],";
+                    continue;
                 }
                 $json .= self::arrayToJsonString($value) . ",";
                 continue;
@@ -266,6 +269,9 @@ class Func
             if (self::arrayEndKey($array) == $name && $is_object) {
                 if (!is_array($value)) {
                     $json .= "\"$name\":\"$value\"}";
+                    continue;
+                }elseif (empty($value)){
+                    $json .= "\"$name\":[]}";
                     continue;
                 }
                 $json .= self::arrayToJsonString($value) . "}";

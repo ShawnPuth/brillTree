@@ -55,6 +55,8 @@ EOF;
 </li>
 EOF;
 
+    protected $guarded = ['id','left','right','depth'];
+
     public function __construct($column)
     {
         parent::__construct($column);
@@ -67,9 +69,9 @@ EOF;
         }else{
             $this->branch = Func::firstSprintf($this->branch,'none');
         }
-
+        $struct = $this->getDataStruct($data);
         $this->makeTree($data,$tree);
-
+        $this->makeForm($struct);
         return $this->tree_view;
     }
 
@@ -133,6 +135,25 @@ EOF;
             }
         }
         return false;
+    }
+
+    private function getDataStruct($data)
+    {
+        $item = current($data);
+        return array_keys($item);
+    }
+
+    private function makeForm($struct)
+    {
+        $input = '<input class="dendrogram-input" name="%s" value="%s">';
+        $form_content = '';
+        foreach ($struct as $item){
+            if(in_array($item,$this->guarded)){
+                continue;
+            }
+            $form_content.=sprintf($input,$item,'{'.$item.'}');
+        }
+        $this->tree_view = $this->tree_view.sprintf($this->form,$form_content);
     }
 
     private function makeColumn($data)

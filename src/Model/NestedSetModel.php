@@ -26,6 +26,11 @@ class NestedSetModel extends Model
      */
     protected $guarded = ['id'];
 
+    public static function add($add)
+    {
+
+    }
+
     public static function getChildren($id)
     {
         $child = self::where('id',$id)->first();
@@ -46,5 +51,10 @@ class NestedSetModel extends Model
         $children = $children->toArray();
         array_unshift($children,$child->toArray());
         return $children;
+    }
+    
+    public static function deleteAll($id)
+    {
+
     }
 }

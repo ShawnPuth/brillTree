@@ -13,13 +13,10 @@ interface Structure
 {
     /**
      * @param $id
-     * @param bool $expand
      * @param array $column
-     * @param string $form_action
-     * @param string $form_content
      * @return mixed
      */
-    public static function buildTree($id, $expand = true, array $column = ['name'], $form_action = '', $form_content = '');
+    public static function buildTree($id,array $column = ['name']);
 
     /**
      * @param $id
@@ -30,5 +27,5 @@ interface Structure
     /**
      * @return mixed
      */
-    public static function operateNode();
+    public static function operateNode($action,$data);
 }

@@ -55,9 +55,9 @@ EOF;
 </li>
 EOF;
 
-    public function __construct($sign, $column, $form_content)
+    public function __construct($column)
     {
-        parent::__construct($sign, $column, $form_content);
+        parent::__construct($column);
     }
 
     public function index($data)
@@ -90,11 +90,11 @@ EOF;
             if (empty($array)) {
                 //no children
                 $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf_apex,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['expand'],$this->makeColumn($item),$this->icon['grow'],''));
+                    sprintf($this->leaf_apex,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],''));
                 return;
             } else {
                 $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],$this->branch));
+                    sprintf($this->leaf,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['shrink'],$this->makeColumn($item),$this->icon['grow'],$this->branch));
             }
         }
 
@@ -155,7 +155,7 @@ EOF;
     {
         if ($node) {
             $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+            return sprintf($this->leaf, Func::arrayToJsonString($data),$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
         }
         return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }

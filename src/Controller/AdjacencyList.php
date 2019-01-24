@@ -27,25 +27,20 @@ EOF;
      * @param bool $expand
      * @param array $column
      * @param string $form_action
-     * @param string $form_content
      * @return string
      */
-    public static function buildTree($id, $expand = true, array $column = ['name'], $form_action = '', $form_content = '')
+    public static function buildTree($id, array $column = ['name'])
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
-        if($form_action){
+        if(config('dendrogram.form_action','')){
             sprintf($js,$form_action);
         }
 
         $p_id = ($id - 1) > 0 ? ($id - 1) : 0;
-        $result = AdjacencyListModel::where('p_id', '>=', $p_id)->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
-        $data = [];
-        if ($result) {
-            $data = $result->toArray();
-        }
+        $data = AdjacencyListModel::getChildren($id);
 
-        $html = (new AdjacencyListViewModel($expand, $column, $form_content))->index($data);
+        $html = (new AdjacencyListViewModel($column))->index($data);
         return sprintf(self::$view, $css, $js, $html);
     }
 
@@ -61,9 +56,16 @@ EOF;
         return $tree;
     }
 
-    public static function operateNode()
+    public static function operateNode($action,$data)
     {
-        // TODO: Implement updateNode() method.
+        if($action == 'add'){
+            return AdjacencyListModel::insertGetId($data);
+        }elseif ($action == 'update' && isset($data['id'])){
+            return AdjacencyListModel::where('id',$data['id'])->update($data);
+        }elseif ($action == 'delete' && isset($data['id'])){
+            return AdjacencyListModel::deleteAll($id);
+        }
+        return false;
     }
 
 }

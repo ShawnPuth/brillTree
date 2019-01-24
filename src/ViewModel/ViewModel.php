@@ -15,7 +15,6 @@ abstract class ViewModel
 
     protected $sign;
     protected $column;
-    protected $form_content;
     protected $form = <<<EOF
 <div id="dendrogram-form">
     <button id="dendrogram-form-close" type="button">
@@ -41,11 +40,10 @@ EOF;
         'ban'=>'<span class="dendrogram-icon"><svg width="14" height="14" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle fill="none" stroke="#fff" stroke-width="1.1" cx="9.5" cy="9.5" r="9"></circle><line fill="none" stroke="#fff" stroke-width="1.1" x1="4" y1="3.5" x2="16" y2="16.5"></line></svg></span> '
     ];
 
-    public function __construct($sign,$column,$form_content)
+    public function __construct($column)
     {
-        $this->sign = $sign;
+        $this->sign = (int)config('dendrogram.expand',true);
         $this->column = $column;
-        $this->form_content = $form_content;
     }
 
     public function index($data){

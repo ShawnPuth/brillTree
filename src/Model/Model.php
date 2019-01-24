@@ -28,6 +28,6 @@ class Model extends BaseModel
     {
         parent::__construct($attributes);
 
-        $this->connection = config('dendrogram.connection');
+        $this->connection = config('dendrogram.connection','mysql');
     }
 }

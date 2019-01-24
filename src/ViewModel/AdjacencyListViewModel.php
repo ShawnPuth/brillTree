@@ -57,9 +57,11 @@ EOF;
 </li>
 EOF;
 
-    public function __construct($sign, $column, $form_data)
+    protected $guarded = ['id','p_id'];
+
+    public function __construct($column)
     {
-        parent::__construct($sign, $column, $form_data);
+        parent::__construct($column);
     }
 
     public function index($data)
@@ -135,15 +137,15 @@ EOF;
 
     private function makeForm($struct)
     {
-        if($this->form_content){
-            $this->tree_view = $this->tree_view.sprintf($this->form,$this->form_content);
-            return;
-        }
         $input = '<input class="dendrogram-input" name="%s" value="%s">';
+        $form_content = '';
         foreach ($struct as $item){
-            $this->form_content.=sprintf($input,$item,'{'.$item.'}');
+            if(in_array($item,$this->guarded)){
+                continue;
+            }
+            $form_content.=sprintf($input,$item,'{'.$item.'}');
         }
-        $this->tree_view = $this->tree_view.sprintf($this->form,$this->form_content);
+        $this->tree_view = $this->tree_view.sprintf($this->form,$form_content);
     }
 
     private function makeColumn($data)
@@ -167,7 +169,7 @@ EOF;
     {
         if ($node) {
             $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),(int)$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+            return sprintf($this->leaf, Func::arrayToJsonString($data),$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
         }
         return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }

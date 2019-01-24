@@ -27,22 +27,20 @@ EOF;
 
     /**
      * @param $id
-     * @param bool $expand
      * @param array $column
      * @param string $form_action
-     * @param string $form_content
      * @return string
      */
-    public static function buildTree($id,$expand = true,array $column = ['name'],$form_action='',$form_content = '')
+    public static function buildTree($id,array $column = ['name'])
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
-        if($form_action){
+        if(config('dendrogram.form_action','')){
             sprintf($js,$form_action);
         }
 
         $data = NestedSetModel::getChildren($id);
-        $html = (new NestedSetViewModel($expand,$column,$form_content))->index($data);
+        $html = (new NestedSetViewModel($column))->index($data);
         return sprintf(self::$view,$css,$js,$html);
     }
 
@@ -51,8 +49,15 @@ EOF;
 
     }
 
-    public static function operateNode()
+    public static function operateNode($action,$data)
     {
-        // TODO: Implement updateNode() method.
+        if($action == 'add'){
+            return AdjacencyListModel::add($data);
+        }elseif ($action == 'update' && isset($data['id'])){
+            return AdjacencyListModel::where('id',$data['id'])->update($data);
+        }elseif ($action == 'delete' && isset($data['id'])){
+            return AdjacencyListModel::deleteAll($id);
+        }
+        return false;
     }
 }

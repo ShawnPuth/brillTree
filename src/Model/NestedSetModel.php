@@ -41,9 +41,9 @@ class NestedSetModel extends Model
         $right = $child->right;
         $depth = $child->depth;
         $children = self::where([
-            ['depth','>=',$depth],
-            ['left','>=',$left],
-            ['right','<=',$right]
+            ['depth','>',$depth],
+            ['left','>',$left],
+            ['right','<',$right]
         ])->get();
         if(!$children){
             return [$child->toArray()];

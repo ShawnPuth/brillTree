@@ -9,5 +9,10 @@
  */
 
 return [
-    'connection' => 'mysql'
+    //数据库连接配置
+    'connection' => 'mysql',
+    //试图默认以展开形式
+    'expand' => true,
+    //操作节点url *路由POST方式请求
+    'form_action' => ''
 ];

@@ -71,29 +71,28 @@
                 dendrogram.bindClassEnvent('dendrogram-grow', 'click', dendrogram.tree.addForm);
                 document.getElementById('mongolia').onclick = function () {
                     dendrogram.tree.mongolia(false);
-                }
+                };
                 document.getElementById('dendrogram-form-close').onclick = function () {
                     dendrogram.tree.mongolia(false);
-                }
+                };
                 dendrogram.bindClassEnvent('dendrogram-form-delete', 'click', dendrogram.tree.delete);
                 dendrogram.bindClassEnvent('dendrogram-form-conserve', 'click', dendrogram.tree.conserve);
             },
             mongolia: function (flag) {
                 if (flag) {
                     document.getElementById('mongolia').setAttribute('style', 'display:block;opacity:1');
-                    document.getElementById('dendrogram-form').setAttribute('style', 'display:block;');
                     setTimeout(function () {
-                        document.getElementById('dendrogram-form').setAttribute('style', 'opacity:1');
+                        document.getElementById('dendrogram-form').setAttribute('style', 'visibility: visible;opacity:1');
                     }, 0);
                     return;
                 }
                 document.getElementById('mongolia').setAttribute('style', 'display:none;opacity:0');
-                document.getElementById('dendrogram-form').setAttribute('style', 'display:none;opacity:0');
+                document.getElementById('dendrogram-form').setAttribute('style', 'visibility: hidden;opacity:0');
             },
             addForm: function () {
                 dendrogram.tree.mongolia(true);
-                document.getElementById('dendrogram-form-theme').innerText = '增加结点';
-                var delete_buttun = document.getElementById('dendrogram-form').getElementsByClassName('delete');
+                document.getElementById('dendrogram-form-theme').innerText = '增加节点';
+                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
                 if (delete_buttun[0] instanceof HTMLElement) {
                     delete_buttun[0].setAttribute('style', 'display:none;');
                 }
@@ -113,8 +112,8 @@
             },
             upForm: function () {
                 dendrogram.tree.mongolia(true);
-                document.getElementById('dendrogram-form-theme').innerText = '修改结点';
-                var delete_buttun = document.getElementById('dendrogram-form').getElementsByClassName('delete');
+                document.getElementById('dendrogram-form-theme').innerText = '修改节点';
+                var delete_buttun = document.getElementsByClassName('dendrogram-form-delete');
                 if (delete_buttun[0] instanceof HTMLElement) {
                     delete_buttun[0].setAttribute('style', 'display:inline-block;');
                 }

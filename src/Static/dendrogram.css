@@ -72,6 +72,21 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     border-radius:0 10px 10px 0;
 }
 
+/* Hover + Focus */
+.dendrogram-tab:hover,
+.dendrogram-tab:focus,
+.dendrogram-grow:hover,
+.dendrogram-grow:focus {
+    background-color: #0f7ae5;
+    color: #fff;
+}
+/* OnClick + Active */
+.dendrogram-tab:active,
+.dendrogram-grow:active {
+    background-color: #0e6dcd;
+    color: #fff;
+}
+
 /*adjacency*/
 .dendrogram-adjacency-node{
     position: relative;
@@ -225,9 +240,11 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 
 #dendrogram-form{
     z-index: 10000;
-    position: relative;
+    visibility: hidden;
+    position: absolute;
+    top: calc(50% - 100px);
+    left: calc(50% - 300px);
     box-sizing: border-box;
-    margin: 0 auto;
     width: 600px;
     max-width: calc(100% - 0.01px) !important;
     background: #fff;
@@ -264,11 +281,11 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 }
 
 .dendrogram-form-header h2{
-    font-size: 30px;
+    font-size: 20px;
     line-height: 1.3;
     margin: 0;
     font-family: ProximaNova,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-    font-weight: 1;
+    font-weight: 100;
     color: #222;
     text-transform: none;
 }
@@ -286,7 +303,6 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 
 .dendrogram-form-delete{
     cursor: pointer!important;
-    border-radius: 2px;
     background-color: #f0506e;
     color: #fff!important;
     border: 1px solid transparent!important;
@@ -297,8 +313,8 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     box-sizing: border-box;
     padding: 0 30px;
     vertical-align: middle;
-    font-size: 14px;
-    line-height: 38px;
+    font-size: 12px;
+    line-height: 30px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
@@ -306,12 +322,20 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     transition-property: color,background-color,border-color;
 }
 
-.dendrogram-form-footer>.delete:hover,.dendrogram-form-footer>.delete:focus{background-color:#ee395b;color:#fff}
-.dendrogram-form-footer>.delete:active{background-color:#ec2147;color:#fff}
+/* Hover + Focus */
+.dendrogram-form-delete:hover,
+.dendrogram-form-delete:focus {
+    background-color: #ee395b;
+    color: #fff;
+}
+/* OnClick + Active */
+.dendrogram-form-delete:active{
+    background-color: #ec2147;
+    color: #fff;
+}
 
 .dendrogram-form-conserve{
     cursor: pointer!important;
-    border-radius: 2px;
     background-color: #1e87f0;
     color: #fff!important;
     border: 1px solid transparent!important;
@@ -322,8 +346,8 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     box-sizing: border-box;
     padding: 0 30px;
     vertical-align: middle;
-    font-size: 14px;
-    line-height: 38px;
+    font-size: 12px;
+    line-height: 30px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
@@ -331,8 +355,14 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     transition-property: color,background-color,border-color;
 }
 
-.dendrogram-form-footer>.conserve:focus,.dendrogram-form-footer>.conserve:hover{background-color:#0f7ae5;color:#fff}
-.dendrogram-form-footer>.conserve:active{background-color:#0e6dcd;color:#fff}
+.dendrogram-form-conserve:hover,.dendrogram-form-conserve:focus{
+    background-color:#0f7ae5;
+    color:#fff;
+}
+.dendrogram-form-conserve:active{
+    background-color:#0e6dcd;
+    color:#fff;
+}
 
 .dendrogram-input{
     margin-top: 0;

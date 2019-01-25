@@ -36,7 +36,7 @@ class NestedSetModel extends Model
             "SELECT dendrogramNestedParentIncreament(?) as p_right,dendrogramNestedCountLayer(?) as layer",
             [$p_id,$p_id]
         );
-        
+
         if(!$result){
             DB::rollBack();
             return false;

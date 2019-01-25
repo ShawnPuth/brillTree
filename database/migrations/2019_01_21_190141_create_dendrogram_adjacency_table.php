@@ -29,7 +29,6 @@ class CreateDendrogramAdjacencyTable extends Migration
         ]);
 
         $sql = <<<EOF
-delimiter //
 CREATE FUNCTION `dendrogramAdjacencyGetChildren`(rootId INT)
 RETURNS LONGTEXT
  
@@ -46,7 +45,6 @@ SELECT group_concat(id) INTO sTempChd FROM dendrogram_adjacency where FIND_IN_SE
 END WHILE;
 RETURN sTemp;
 END
-//
 EOF;
         \Illuminate\Support\Facades\DB::unprepared($sql);
     }

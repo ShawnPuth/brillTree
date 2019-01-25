@@ -34,7 +34,6 @@ class CreateDendrogramNestedTable extends Migration
         ]);
 
         $sql = <<<EOF
-delimiter //
 CREATE FUNCTION `dendrogramNestedParentIncreament`(pId INT)
 RETURNS INT
  
@@ -45,12 +44,10 @@ BEGIN
 	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>=rgt;
 RETURN rgt;
 END
-//
 EOF;
         \Illuminate\Support\Facades\DB::unprepared($sql);
 
         $sql = <<<EOF
-delimiter //
 CREATE FUNCTION `dendrogramNestedCountLayer`(pId INT)
 RETURNS INT
  
@@ -63,7 +60,6 @@ BEGIN
 	END IF;
 	RETURN 0;
 END
-//
 EOF;
         \Illuminate\Support\Facades\DB::unprepared($sql);
     }

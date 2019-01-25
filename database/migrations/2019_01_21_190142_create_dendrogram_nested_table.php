@@ -38,10 +38,12 @@ CREATE FUNCTION `dendrogramNestedParentIncreament`(pId INT)
 RETURNS INT
  
 BEGIN
-	DECLARE rgt int;
+	DECLARE lft,rgt int;
+	SET lft = 0;
 	SET rgt = 0;
-	SELECT `right` INTO rgt FROM dendrogram_nested WHERE id = pId;
-	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>=rgt;
+	SELECT `left`,`right` INTO lft,rgt FROM dendrogram_nested WHERE id = pId;
+	UPDATE dendrogram_nested SET `left`=`left`+2,`right`=`right`+2 WHERE `left` > rgt;
+	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>= rgt AND `left` <= lft;
 RETURN rgt;
 END
 EOF;

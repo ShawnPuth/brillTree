@@ -42,7 +42,7 @@ class NestedSetModel extends Model
             return false;
         }
         $right = $result['p_right'];
-        $layer = $result['layer'] + 1;
+        $layer = $result['layer'];
         $data['left'] = $right;
         $data['right'] = $right + 1;
         $data['layer'] = $layer;
@@ -68,7 +68,6 @@ class NestedSetModel extends Model
             return [$mine->toArray()];
         }
         $children = $children->toArray();
-        array_unshift($children,$mine->toArray());
         return $children;
     }
     

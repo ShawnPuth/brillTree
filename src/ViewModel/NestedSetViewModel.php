@@ -119,9 +119,7 @@ EOF;
             if (!empty($branch['children']) && $array) {
                 $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
                 $this->makeTree($array, $branch['children']);
-            } elseif (empty($branch['children'])) {
-                return;
-            } else {
+            } elseif (!empty($branch['children'])) {
                 $this->tree_view = Func::firstSprintf($this->tree_view, join('', $shoot));
             }
         }

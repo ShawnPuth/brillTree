@@ -32,7 +32,11 @@ class NestedSetModel extends Model
         $p_id = $data['p_id'];
         unset($data['p_id']);
         DB::beginTransaction();
-        $result = (array)DB::selectOne("SELECT dendrogramNestedParentIncreament(?) as p_right,dendrogramNestedCountLayer(?) as layer",[$p_id,$p_id]);
+        $result = (array)DB::selectOne(
+            "SELECT dendrogramNestedParentIncreament(?) as p_right,dendrogramNestedCountLayer(?) as layer",
+            [$p_id,$p_id]
+        );
+        
         if(!$result){
             DB::rollBack();
             return false;
@@ -53,23 +57,29 @@ class NestedSetModel extends Model
 
     public static function getChildren($id)
     {
-        $child = self::where('id',$id)->first();
-        if(!$child){
+        $mine = self::where('id',$id)->first();
+        if(!$mine){
             return [];
         }
-        $left = $child->left;
-        $right = $child->right;
+        $left = $mine->left;
+        $right = $mine->right;
         $children = self::whereBetween('left', [$left, $right])->get();
         if(!$children){
-            return [$child->toArray()];
+            return [$mine->toArray()];
         }
         $children = $children->toArray();
-        array_unshift($children,$child->toArray());
+        array_unshift($children,$mine->toArray());
         return $children;
     }
     
     public static function deleteAll($id)
     {
-
+        $mine = self::where('id',$id)->first();
+        if(!$mine){
+            return false;
+        }
+        $left = $mine->left;
+        $right = $mine->right;
+        return self::whereBetween('left', [$left, $right])->delete();
     }
 }

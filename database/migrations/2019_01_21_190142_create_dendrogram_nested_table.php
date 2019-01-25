@@ -32,6 +32,40 @@ class CreateDendrogramNestedTable extends Migration
             ["id"=>8,"left"=>17,"right"=>18,"depth"=>2,"name"=>"短裙"],
             ["id"=>9,"left"=>19,"right"=>20,"depth"=>2,"name"=>"开衫"],
         ]);
+
+        $sql = <<<EOF
+delimiter //
+CREATE FUNCTION `dendrogramNestedParentIncreament`(pId INT)
+RETURNS INT
+ 
+BEGIN
+	DECLARE rgt int;
+	SET rgt = 0;
+	SELECT `right` INTO rgt FROM dendrogram_nested WHERE id = pId;
+	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>=rgt;
+RETURN rgt;
+END
+//
+EOF;
+        \Illuminate\Support\Facades\DB::unprepared($sql);
+
+        $sql = <<<EOF
+delimiter //
+CREATE FUNCTION `dendrogramNestedCountLayer`(pId INT)
+RETURNS INT
+ 
+BEGIN
+	DECLARE result,lft,rgt int default 0;
+	IF EXISTS (SELECT 1 FROM dendrogram_nested WHERE id=pId) THEN BEGIN
+	SELECT `left`, `right` INTO lft, rgt FROM dendrogram_nested WHERE id=pId;
+	SELECT count(*) INTO result FROM dendrogram_nested WHERE `left` <= lft and `right` >= rgt;
+	return result;END;
+	END IF;
+	RETURN 0;
+END
+//
+EOF;
+        \Illuminate\Support\Facades\DB::unprepared($sql);
     }
 
     /**

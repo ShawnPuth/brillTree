@@ -49,7 +49,7 @@ EOF;
 
     public static function operateNode($action,$data)
     {
-        if($action == 'add'){
+        if($action == 'add' && isset($data['p_id'])){
             return NestedSetModel::add($data);
         }elseif ($action == 'update' && isset($data['id'])){
             return NestedSetModel::where('id',$data['id'])->update($data);

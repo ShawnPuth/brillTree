@@ -8,6 +8,7 @@
 
 namespace DenDroGram\Model;
 
+use Illuminate\Support\Facades\DB;
 
 class NestedSetModel extends Model
 {
@@ -26,9 +27,28 @@ class NestedSetModel extends Model
      */
     protected $guarded = ['id'];
 
-    public static function add($add)
+    public static function add($data)
     {
-
+        $p_id = $data['p_id'];
+        unset($data['p_id']);
+        DB::beginTransaction();
+        $result = (array)DB::selectOne("SELECT dendrogramNestedParentIncreament(?) as p_right,dendrogramNestedCountLayer(?) as layer",[$p_id,$p_id]);
+        if(!$result){
+            DB::rollBack();
+            return false;
+        }
+        $right = $result['p_right'];
+        $layer = $result['layer'] + 1;
+        $data['left'] = $right;
+        $data['right'] = $right + 1;
+        $data['layer'] = $layer;
+        $result = self::insertGetId($data);
+        if(!$result){
+            DB::rollBack();
+            return false;
+        }
+        DB::commit();
+        return true;
     }
 
     public static function getChildren($id)
@@ -39,12 +59,7 @@ class NestedSetModel extends Model
         }
         $left = $child->left;
         $right = $child->right;
-        $depth = $child->depth;
-        $children = self::where([
-            ['depth','>',$depth],
-            ['left','>',$left],
-            ['right','<',$right]
-        ])->get();
+        $children = self::whereBetween('left', [$left, $right])->get();
         if(!$children){
             return [$child->toArray()];
         }

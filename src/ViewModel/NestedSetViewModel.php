@@ -55,7 +55,7 @@ EOF;
 </li>
 EOF;
 
-    protected $guarded = ['id','left','right','depth'];
+    protected $guarded = ['id','left','right','layer'];
 
     public function __construct($column)
     {
@@ -103,7 +103,7 @@ EOF;
         foreach ($tree as &$branch) {
             $shoot = [];
             foreach ($array as $key => $value) {
-                if (($branch['depth'] + 1) == $value['depth'] && $branch['left'] < $value['left'] && $branch['right'] > $value['left']) {
+                if (($branch['layer'] + 1) == $value['layer'] && $branch['left'] < $value['left'] && $branch['right'] > $value['left']) {
                     $value['children'] = [];
                     $branch['children'][] = $value;
                     unset($array[$key]);
@@ -130,7 +130,7 @@ EOF;
     private function hasChildren($item,$data)
     {
         foreach ($data as $key => $value) {
-            if(($item['depth'] + 1) == $value['depth'] && $item['left'] < $value['left'] && $item['right'] > $value['right']){
+            if(($item['layer'] + 1) == $value['layer'] && $item['left'] < $value['left'] && $item['right'] > $value['right']){
                 return true;
             }
         }

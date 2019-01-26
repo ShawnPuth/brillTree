@@ -33,7 +33,7 @@ class NestedSetModel extends Model
         unset($data['p_id']);
         DB::beginTransaction();
         $result = (array)DB::selectOne(
-            "SELECT dendrogramNestedParentIncreament(?) as p_right,dendrogramNestedCountLayer(?) as layer",
+            "SELECT dendrogramNestedIncrement(?) as p_right,dendrogramNestedLayer(?) as layer",
             [$p_id,$p_id]
         );
 
@@ -73,12 +73,29 @@ class NestedSetModel extends Model
     
     public static function deleteAll($id)
     {
+        DB::beginTransaction();
         $mine = self::where('id',$id)->first();
         if(!$mine){
+            DB::rollBack();
             return false;
         }
         $left = $mine->left;
         $right = $mine->right;
-        return self::whereBetween('left', [$left, $right])->delete();
+        $distance = $right - $left + 1;
+        $result = self::whereBetween('left', [$left, $right])->delete();
+        if(!$result){
+            DB::rollBack();
+            return false;
+        }
+        $result = (array)DB::selectOne(
+            "SELECT dendrogramNestedReduction(?,?,?)",
+            [$distance,$left,$right]
+        );
+        if(!$result){
+            DB::rollBack();
+            return false;
+        }
+        DB::commit();
+        return true;
     }
 }

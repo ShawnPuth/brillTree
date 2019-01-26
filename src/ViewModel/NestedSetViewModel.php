@@ -40,7 +40,7 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s data-sign=%d class="dendrogram-nested-branch">
+    <div data-v=%s class="dendrogram-nested-branch">
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s 
          </a>
@@ -92,7 +92,7 @@ EOF;
             if (empty($array)) {
                 //no children
                 $this->tree_view = sprintf($this->root,
-                    sprintf($this->leaf_apex,Func::arrayToJsonString($item),(int)$this->sign,$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],''));
+                    sprintf($this->leaf_apex,Func::arrayToJsonString($item),$this->icon['ban'],$this->makeColumn($item),$this->icon['grow'],''));
                 return;
             } else {
                 $this->tree_view = sprintf($this->root,

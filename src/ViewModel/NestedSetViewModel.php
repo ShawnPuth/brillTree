@@ -40,7 +40,7 @@ EOF;
 
     private $leaf_apex = <<<EOF
 <li>
-    <div data-v=%s class="dendrogram-nested-branch">
+    <div data-v=%s data-sign=%d class="dendrogram-nested-branch">
          <a href="javascript:void(0);" class="dendrogram-ban">
             %s 
          </a>

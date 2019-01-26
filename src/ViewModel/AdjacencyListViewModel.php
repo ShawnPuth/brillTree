@@ -96,10 +96,10 @@ EOF;
             $tree[$item[$id]] = [];
             if (empty($array)) {
                 //无子节点
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, Func::arrayToJsonString($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf_apex, json_encode($item),$this->icon['ban'], $this->makeColumn($item),$this->icon['grow'], ''));
                 return;
             } else {
-                $this->tree_view = sprintf($this->root, sprintf($this->leaf, Func::arrayToJsonString($item),(int)$this->sign,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
+                $this->tree_view = sprintf($this->root, sprintf($this->leaf, json_encode($item),(int)$this->sign,$left_button, $this->makeColumn($item),$this->icon['grow'], $this->branch));
             }
         }
 
@@ -167,8 +167,8 @@ EOF;
     {
         if ($node) {
             $left_button = $this->sign ? $this->icon['shrink'] : $this->icon['expand'];
-            return sprintf($this->leaf, Func::arrayToJsonString($data),$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
+            return sprintf($this->leaf, json_encode($data),$this->sign,$left_button, $this->makeColumn($data),$this->icon['grow'], $this->branch);
         }
-        return sprintf($this->leaf_apex, Func::arrayToJsonString($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
+        return sprintf($this->leaf_apex, json_encode($data),$this->icon['ban'], $this->makeColumn($data),$this->icon['grow'], '');
     }
 }

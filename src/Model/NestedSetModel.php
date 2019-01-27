@@ -63,7 +63,7 @@ class NestedSetModel extends Model
         }
         $left = $mine->left;
         $right = $mine->right;
-        $children = self::whereBetween('left', [$left, $right])->get();
+        $children = self::whereBetween('left', [$left, $right])->orderBy('layer')->get();
         if(!$children){
             return [$mine->toArray()];
         }

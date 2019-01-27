@@ -1,4 +1,4 @@
-<h3 align="center">laravel系统树图</h3>
+<h3 align="center">PHP系统树图</h3>
 
 <table><thead><tr><th style="text-align:left;">dendrogram</th>
 <th style="text-align:left;">Laravel</th>
@@ -9,7 +9,7 @@
 </tr></tbody></table>
 
 ### 安装
-    composer require dendrogram/dendrogram
+    composer require dendrogram/dendrogram:v1.0
 
 ### 配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：

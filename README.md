@@ -14,10 +14,8 @@
 ### 配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
 
-    [
     'providers' => [
         DenDroGram\DendrogramServiceProvider::class
-      ]
     ]
     
 然后发布拓展包的配置文件，使用如下命令：

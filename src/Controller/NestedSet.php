@@ -25,6 +25,7 @@ class NestedSet implements Structure
 EOF;
 
     /**
+     * 返回视图
      * @param $id
      * @param array $column
      * @return mixed|string
@@ -42,11 +43,58 @@ EOF;
         return sprintf(self::$view,$css,$js,$html);
     }
 
+    /**
+     * 返回数据结构
+     * @param $id
+     * @return mixed
+     */
     public static function getTreeData($id)
     {
-
+        $data = NestedSetModel::getChildren($id);
+        self::makeTeeData($data,$tree);
+        return current($tree);
     }
 
+    private static function makeTeeData(&$array, &$branch = [])
+    {
+        if(empty($array)){
+            return;
+        }
+
+        if (empty($branch)) {
+            $item = array_shift($array);
+            $item['children'] = [];
+            $branch[] = $item;
+            if (!empty($array)) {
+                self::makeTeeData($array,$branch);
+            }
+            return;
+        }
+
+        foreach ($branch as $k=>&$b) {
+            $b['children'] = [];
+            $shoot = [];
+            foreach ($array as $key => $value) {
+                if (($b['layer'] + 1) == $value['layer'] && $b['left'] < $value['left'] && $b['right'] > $value['left']) {
+                    $value['children'] = [];
+                    $shoot[] = $value;
+                    unset($array[$key]);
+                }
+            }
+
+            if (!empty($array) && !empty($shoot)) {
+                self::makeTeeData($array,$shoot);
+                $b['children'] = $shoot;
+            }
+        }
+    }
+
+    /**
+     * 操作节点
+     * @param $action
+     * @param $data
+     * @return bool
+     */
     public static function operateNode($action,$data)
     {
         if($action == 'add' && isset($data['p_id'])){

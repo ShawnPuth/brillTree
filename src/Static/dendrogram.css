@@ -2,9 +2,21 @@
     clear: both;
 }
 html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;font-size: 14px;}
+.dendrogram a{
+    font-size: 14px !important;
+}
+
+.dendrogram svg{
+    vertical-align: middle !important;
+}
 
 .dendrogram .text{
-    width: 80px;height: 30px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;display: inline-block;
+    width: 80px;
+    height: 30px;
+    line-height: 30px;
+    white-space: nowrap;text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
 }
 
 .dendrogram .text:nth-child(2){
@@ -13,14 +25,12 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 
 .dendrogram-icon{
     display: inline;
-    width: 14px;
-    height: 14px;
-    position: relative;
-    top:13px;
-    left: 3px;
+    line-height: 38px !important;
+    padding-left: 3px;
 }
 
 .dendrogram-button {
+    line-height: 60px !important;
     cursor: pointer;
     height:40px;padding: 0 10px;float: left;
     background-color: transparent;
@@ -33,7 +43,6 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     box-sizing: border-box;
     vertical-align: middle;
     font-size: .875rem;
-    line-height: 30px;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;

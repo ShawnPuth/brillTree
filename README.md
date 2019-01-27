@@ -1,4 +1,4 @@
-<h3 align="center">php系统树图</h3>
+<h3 align="center">laravel系统树图</h3>
 
 <table><thead><tr><th style="text-align:left;">dendrogram</th>
 <th style="text-align:left;">Laravel</th>

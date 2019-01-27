@@ -32,11 +32,11 @@
     
     php artisan migrate
 
-`adjacency结构 `
+`adjacency结构 以父节点为基准的链式查询 增删容易 查询不便`
 
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/adjacency.PNG)
 
-`nested结构 `
+`nested结构 以左右值包容形式 增删不便 查询容易`
 
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/nested.PNG)
 

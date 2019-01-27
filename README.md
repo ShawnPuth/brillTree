@@ -25,6 +25,7 @@
     php artisan vendor:publish
     
 此时config目录下会生成dendrogram.php配置文件
+
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/config.PNG)
 
 ### 数据导入
@@ -33,17 +34,22 @@
     php artisan migrate
 
 `adjacency结构 `
+
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/adjacency.PNG)
 
 `nested结构 `
+
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/nested.PNG)
 
 ### 举个栗子
+
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/example.PNG)
 
 `adjacency数据结构生成的视图`
+
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/catelog.PNG)
 
 `rhizome数据结构生成的视图`
+
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/rhizome.PNG)
 

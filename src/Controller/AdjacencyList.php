@@ -55,6 +55,9 @@ EOF;
     public static function operateNode($action,$data)
     {
         if($action == 'add'){
+            if(isset($data['sort'])){
+                $data['sort'] = (int)$data['sort'];
+            }
             return AdjacencyListModel::insertGetId($data);
         }elseif ($action == 'update' && isset($data['id'])){
             return AdjacencyListModel::where('id',$data['id'])->update($data);

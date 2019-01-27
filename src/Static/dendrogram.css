@@ -2,8 +2,16 @@
     clear: both;
 }
 html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;font-size: 14px;}
+.dendrogram *{
+    line-height: 0.5;
+}
+
 .dendrogram a{
     font-size: 14px !important;
+}
+
+.dendrogram li{
+    display: list-item !important;
 }
 
 .dendrogram .text{

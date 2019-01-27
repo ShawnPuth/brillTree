@@ -6,10 +6,6 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
     font-size: 14px !important;
 }
 
-.dendrogram svg{
-    vertical-align: middle !important;
-}
-
 .dendrogram .text{
     width: 80px;
     height: 30px;
@@ -24,9 +20,9 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 }
 
 .dendrogram-icon{
-    display: inline;
-    line-height: 38px !important;
-    padding-left: 3px;
+    display: inline-block;
+    line-height: 40px !important;
+    height: 40px;
 }
 
 .dendrogram-button {
@@ -55,6 +51,7 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 }
 
 .dendrogram-tab{
+    text-align: center;
     float: left;
     display: block;
     width: 20px;
@@ -64,6 +61,7 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 }
 
 .dendrogram-ban{
+    text-align: center;
     float: left;
     display: block;
     width: 20px;
@@ -73,6 +71,7 @@ html{font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvet
 }
 
 .dendrogram-grow{
+    text-align: center;
     float: left;
     display: block;
     width: 20px;

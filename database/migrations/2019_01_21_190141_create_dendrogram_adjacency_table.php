@@ -15,9 +15,9 @@ class CreateDendrogramAdjacencyTable extends Migration
     {
         Schema::create('dendrogram_adjacency', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('p_id')->default(0);
-            $table->string('name')->default('');
-            $table->integer('sort')->default(0);
+            $table->integer('p_id')->default(0)->comment('父节点id');
+            $table->string('name')->default('')->comment('节点名称');
+            $table->integer('sort')->default(0)->comment('排序 同级有效');
         });
 
         \Illuminate\Support\Facades\DB::table('dendrogram_adjacency')->insert([

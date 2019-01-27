@@ -15,10 +15,10 @@ class CreateDendrogramNestedTable extends Migration
     {
         Schema::create('dendrogram_nested', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->default('');
-            $table->integer('left')->default(0);
-            $table->integer('right')->default(0);
-            $table->integer('layer')->default(0);
+            $table->string('name')->default('')->comment('节点名称');
+            $table->integer('left')->default(0)->comment('左值');
+            $table->integer('right')->default(0)->comment('右值');
+            $table->integer('layer')->default(0)->comment('层级');
         });
 
         \Illuminate\Support\Facades\DB::table('dendrogram_nested')->insert([

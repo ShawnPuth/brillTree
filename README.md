@@ -48,7 +48,7 @@ adjacency数据结构生成的视图
 
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/catelog.PNG)
 
-rhizome数据结构生成的视图
+nested数据结构生成的视图
 
 ![example](https://github.com/ydtg1993/dendrogram/blob/master/image/rhizome.PNG)
 

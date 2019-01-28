@@ -3,8 +3,8 @@
 <table><thead><tr><th style="text-align:left;">dendrogram</th>
 <th style="text-align:left;">Laravel</th>
 <th style="text-align:left;">PHP</th>
-</tr></thead><tbody><tr><td style="text-align:left;">1.0.0</td>
-<td style="text-align:left;">5.3.*</td>
+</tr></thead><tbody><tr><td style="text-align:left;">v1.0</td>
+<td style="text-align:left;">5.*</td>
 <td style="text-align:left;">&gt;=5.6.4</td>
 </tr></tbody></table>
 

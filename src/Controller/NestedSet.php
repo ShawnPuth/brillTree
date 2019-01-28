@@ -25,12 +25,11 @@ class NestedSet implements Structure
 EOF;
 
     /**
-     * 返回视图
      * @param $id
      * @param array $column
      * @return mixed|string
      */
-    public static function buildTree($id,array $column = ['name'])
+    public function buildTree($id,array $column = ['name'])
     {
         $css = file_get_contents(__DIR__.'/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__.'/../Static/dendrogram.js');
@@ -44,11 +43,10 @@ EOF;
     }
 
     /**
-     * 返回数据结构
      * @param $id
      * @return mixed
      */
-    public static function getTreeData($id)
+    public function getTreeData($id)
     {
         $data = NestedSetModel::getChildren($id);
         self::makeTeeData($data,$tree);
@@ -90,12 +88,11 @@ EOF;
     }
 
     /**
-     * 操作节点
      * @param $action
      * @param $data
      * @return bool
      */
-    public static function operateNode($action,$data)
+    public function operateNode($action,$data)
     {
         if($action == 'add' && isset($data['p_id'])){
             return NestedSetModel::add($data);

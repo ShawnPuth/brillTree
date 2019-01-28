@@ -16,18 +16,18 @@ interface Structure
      * @param array $column
      * @return mixed
      */
-    public static function buildTree($id,array $column = ['name']);
+    public function buildTree($id,array $column = ['name']);
 
     /**
      * @param $id
      * @return mixed
      */
-    public static function getTreeData($id);
+    public function getTreeData($id);
 
     /**
      * @param $action
      * @param $data
      * @return mixed
      */
-    public static function operateNode($action,$data);
+    public function operateNode($action,$data);
 }

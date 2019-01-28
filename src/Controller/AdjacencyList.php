@@ -23,12 +23,11 @@ class AdjacencyList implements Structure
 EOF;
 
     /**
-     * 返回视图
      * @param $id
      * @param array $column
      * @return mixed|string
      */
-    public static function buildTree($id, array $column = ['name'])
+    public function buildTree($id, array $column = ['name'])
     {
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
@@ -43,11 +42,10 @@ EOF;
     }
 
     /**
-     * 返回数据结构
      * @param $id
      * @return array
      */
-    public static function getTreeData($id)
+    public function getTreeData($id)
     {
         $data = AdjacencyListModel::getChildren($id);
         $tree = Func::quadraticArrayToTreeData($data, 'id', 'p_id', 'children');
@@ -55,12 +53,11 @@ EOF;
     }
 
     /**
-     * 操作节点
      * @param $action
      * @param $data
      * @return bool
      */
-    public static function operateNode($action,$data)
+    public function operateNode($action,$data)
     {
         if($action == 'add'){
             if(isset($data['sort'])){

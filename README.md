@@ -84,7 +84,7 @@ nested结构 以左右值包容形式 增删不便 查询容易
         <tr>
             <td style="text-align:left;">(new DenDroGram(NestedSet::class))->buildTree($node_id,['name'])</td>
             <td style="text-align:left;">NestedSet数据格式</td>
-            <td style="text-align:left;">NestedSet格式数据生成目录式结构树</td>
+            <td style="text-align:left;">NestedSet格式数据生成根茎式结构树</td>
             <td style="text-align:left;">根节点id , 每个节点显示信息</td>
             <td style="text-align:left;">返回html文本string</td>
             <td style="text-align:left;">视图的相关在dendrogram.php中配置 如操作节点方法的路由</td>

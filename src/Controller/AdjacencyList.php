@@ -60,7 +60,7 @@ EOF;
     public function operateNode($action,$data)
     {
         if($action == 'add'){
-            if(isset($data['sort'])){
+            if(array_key_exists('sort',$data)){
                 $data['sort'] = (int)$data['sort'];
             }
             return AdjacencyListModel::insertGetId($data);

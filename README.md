@@ -32,7 +32,7 @@
 
 ![config](https://github.com/ydtg1993/dendrogram/blob/master/image/config.PNG)
 
-### 数据导入（两表三个自定义函数）
+### 数据导入（两表三个自定义函数 表结构可自行添加字段）
     
     php artisan migrate
 

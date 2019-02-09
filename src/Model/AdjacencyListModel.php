@@ -26,6 +26,19 @@ class AdjacencyListModel extends Model
      */
     protected $guarded = ['id','p_id'];
 
+    /**
+     * Create a new Eloquent model instance.
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('dendrogram.adjacency_table','dendrogram_adjacency');
+    }
+
     public static function getChildren($id)
     {
         $data = self::whereRaw("FIND_IN_SET(id,dendrogramAdjacencyGetChildren($id))")->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();

@@ -18,6 +18,19 @@ class NestedSetModel extends Model
     protected $table = 'dendrogram_nested';
 
     /**
+     * Create a new Eloquent model instance.
+     *
+     * @param  array  $attributes
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+
+        $this->table = config('dendrogram.nested_table','dendrogram_nested');
+    }
+
+    /**
      * @var bool 
      */
     public $timestamps = false;

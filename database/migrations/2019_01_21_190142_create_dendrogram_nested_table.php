@@ -13,7 +13,8 @@ class CreateDendrogramNestedTable extends Migration
      */
     public function up()
     {
-        Schema::create('dendrogram_nested', function (Blueprint $table) {
+        $table = config('dendrogram.nested_table','dendrogram_nested');
+        Schema::create($table, function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->default('')->comment('节点名称');
             $table->integer('left')->default(0)->comment('左值');
@@ -21,7 +22,7 @@ class CreateDendrogramNestedTable extends Migration
             $table->integer('layer')->default(0)->comment('层级');
         });
 
-        \Illuminate\Support\Facades\DB::table('dendrogram_nested')->insert([
+        \Illuminate\Support\Facades\DB::table($table)->insert([
             ["id"=>1,"left"=>1,"right"=>22,"layer"=>0,"name"=>"衣服"],
             ["id"=>2,"left"=>2,"right"=>9,"layer"=>1,"name"=>"男衣"],
             ["id"=>3,"left"=>10,"right"=>21,"layer"=>1,"name"=>"女衣"],
@@ -41,7 +42,7 @@ BEGIN
 	DECLARE lft,rgt int;
 	SET lft = 0;
 	SET rgt = 0;
-	SELECT `left`,`right` INTO lft,rgt FROM dendrogram_nested WHERE id = pId;
+	SELECT `left`,`right` INTO lft,rgt FROM $table WHERE id = pId;
 	UPDATE dendrogram_nested SET `left`=`left`+2,`right`=`right`+2 WHERE `left` > rgt;
 	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>= rgt AND `left` <= lft;
 RETURN rgt;
@@ -54,8 +55,8 @@ CREATE FUNCTION `dendrogramNestedReduction`(distance INT,lft INT ,rgt INT)
 RETURNS INT
  
 BEGIN
-	UPDATE dendrogram_nested SET `right`=`right` - distance WHERE `right` > rgt AND `left` < lft;
-	UPDATE dendrogram_nested SET `left`=`left` - distance,`right`=`right` - distance WHERE `left` > rgt;
+	UPDATE $table SET `right`=`right` - distance WHERE `right` > rgt AND `left` < lft;
+	UPDATE $table SET `left`=`left` - distance,`right`=`right` - distance WHERE `left` > rgt;
 RETURN rgt;
 END
 EOF;
@@ -67,9 +68,9 @@ RETURNS INT
  
 BEGIN
 	DECLARE result,lft,rgt int default 0;
-	IF EXISTS (SELECT 1 FROM dendrogram_nested WHERE id=pId) THEN BEGIN
-	SELECT `left`, `right` INTO lft, rgt FROM dendrogram_nested WHERE id=pId;
-	SELECT count(*) INTO result FROM dendrogram_nested WHERE `left` <= lft and `right` >= rgt;
+	IF EXISTS (SELECT 1 FROM $table WHERE id=pId) THEN BEGIN
+	SELECT `left`, `right` INTO lft, rgt FROM $table WHERE id=pId;
+	SELECT count(*) INTO result FROM $table WHERE `left` <= lft and `right` >= rgt;
 	return result;END;
 	END IF;
 	RETURN 0;
@@ -85,6 +86,7 @@ EOF;
      */
     public function down()
     {
-        Schema::dropIfExists('dendrogram_nested');
+        $table = config('dendrogram.nested_table','dendrogram_nested');
+        Schema::dropIfExists($table);
     }
 }

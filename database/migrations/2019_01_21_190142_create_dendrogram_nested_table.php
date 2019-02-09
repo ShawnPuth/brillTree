@@ -43,8 +43,8 @@ BEGIN
 	SET lft = 0;
 	SET rgt = 0;
 	SELECT `left`,`right` INTO lft,rgt FROM $table WHERE id = pId;
-	UPDATE dendrogram_nested SET `left`=`left`+2,`right`=`right`+2 WHERE `left` > rgt;
-	UPDATE dendrogram_nested SET `right`=`right`+2 WHERE `right`>= rgt AND `left` <= lft;
+	UPDATE $table SET `left`=`left`+2,`right`=`right`+2 WHERE `left` > rgt;
+	UPDATE $table SET `right`=`right`+2 WHERE `right`>= rgt AND `left` <= lft;
 RETURN rgt;
 END
 EOF;

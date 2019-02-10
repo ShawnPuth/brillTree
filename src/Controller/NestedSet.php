@@ -83,6 +83,9 @@ EOF;
             if (!empty($array) && !empty($shoot)) {
                 self::makeTeeData($array,$shoot);
                 $b['children'] = $shoot;
+            }elseif (empty($array) && !empty($shoot)){
+                self::makeTeeData($array,$shoot);
+                $b['children'] = $shoot;
             }
         }
     }

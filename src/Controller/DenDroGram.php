@@ -52,7 +52,7 @@ class DenDroGram implements Structure
     public function getTreeData($id)
     {
         try {
-            $result = $this->instance->buildTree($id);
+            $result = $this->instance->getTreeData($id);
         }catch (Exception $e){
             throw new \DendrogramException($e->getMessage());
         }

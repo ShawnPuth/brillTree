@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/14 0014
- * Time: 下午 2:43
+ * Created by VsCode.
+ * User: ShwanPuth
+ * Date: 2019/4/11 
+ * Time: 下午 4:58
  */
 
 namespace DenDroGram\Controller;
@@ -16,7 +16,7 @@ interface Structure
      * @param array $column
      * @return mixed
      */
-    public function buildTree($id,array $column = ['name']);
+    public function buildTree($id,array $column = ['name'],  string $pid = 'p_id');
 
     /**
      * @param $id

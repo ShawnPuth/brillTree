@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: ydtg1
- * Date: 2019/1/28
- * Time: 12:39
+ * Created by VsCode.
+ * User: ShwanPuth
+ * Date: 2019/4/11
+ * Time: 16:49
  */
 
 namespace DenDroGram\Controller;
@@ -33,10 +33,10 @@ class DenDroGram implements Structure
      * @return mixed
      * @throws \DendrogramException
      */
-    public function buildTree($id, array $column = ['name'])
+    public function buildTree($id, array $column = ['name'], string $pid = 'p_id')
     {
         try {
-            $result = $this->instance->buildTree($id, $column);
+            $result = $this->instance->buildTree($id, $column, $pid);
         }catch (Exception $e){
             throw new \DendrogramException($e->getMessage());
         }

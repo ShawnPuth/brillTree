@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/21 0021
- * Time: 下午 5:35
+ * Created by VsCode.
+ * User: ShawnPuth
+ * Date: 2019/4/11 
+ * Time: 下午 17:05
  */
 
 namespace DenDroGram\Model;
@@ -24,7 +24,7 @@ class AdjacencyListModel extends Model
     /**
      * @var array 
      */
-    protected $guarded = ['id','p_id'];
+    // protected $guarded = ['id','agent_id'];
 
     /**
      * Create a new Eloquent model instance.
@@ -39,9 +39,9 @@ class AdjacencyListModel extends Model
         $this->table = config('dendrogram.adjacency_table','dendrogram_adjacency');
     }
 
-    public static function getChildren($id)
-    {
-        $data = self::whereRaw("FIND_IN_SET(id,dendrogramAdjacencyGetChildren($id))")->orderBy('p_id', 'ASC')->orderBy('sort', 'DESC')->get();
+    public static function getChildren($id, $pid)
+    {   
+        $data = self::whereRaw("FIND_IN_SET(id,dendrogramAdjacencyGetChildren($id))")->orderBy($pid, 'ASC')->orderBy('sort', 'DESC')->get();
         if(!$data){
             return [];
         }

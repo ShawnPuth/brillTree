@@ -1,10 +1,10 @@
 {
-    "name": "dendrogram/dendrogram",
+    "name": "brillTree/brillTree",
     "description": "php对关系型数据转换成树状图",
     "authors": [
         {
-            "name": "Hikki",
-            "email": "946818508@qq.com"
+            "name": "ShwanPuth",
+            "email": "tomorrowbrill@gmail.com"
         }
     ],
     "license": "MIT",

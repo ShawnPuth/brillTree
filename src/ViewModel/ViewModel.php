@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/21 0021
- * Time: 下午 4:06
+ * Created by VsCode.
+ * User: ShawnPuth
+ * Date: 2019/4/11 
+ * Time: 下午 17:02
  */
 
 namespace DenDroGram\ViewModel;
@@ -46,7 +46,7 @@ EOF;
         $this->column = $column;
     }
 
-    public function index($data){
+    public function index($data, $pid){
 
     }
 }

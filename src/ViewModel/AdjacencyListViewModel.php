@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/14 0014
- * Time: 下午 3:47
+ * Created by VsCode.
+ * User: ShawnPuth
+ * Date: 2019/4/11 
+ * Time: 下午 17:00
  */
 
 namespace DenDroGram\ViewModel;
@@ -57,14 +57,15 @@ EOF;
 </li>
 EOF;
 
-    protected $guarded = ['id','p_id'];
+    protected $guarded;
 
-    public function __construct($column)
+    public function __construct($column, $pid)
     {
-        parent::__construct($column);
+        parent::__construct($column, $pid);
+        $this->guarded = ['id', $pid];
     }
 
-    public function index($data)
+    public function index($data, $pid)
     {
         if($this->sign){
             $this->branch = Func::firstSprintf($this->branch,'block');
@@ -72,7 +73,7 @@ EOF;
             $this->branch = Func::firstSprintf($this->branch,'none');
         }
         $struct = $this->getDataStruct($data);
-        $this->makeTree('id', 'p_id', $data, $tree);
+        $this->makeTree('id', $pid, $data, $tree);
         $this->makeForm($struct);
         return $this->tree_view;
     }

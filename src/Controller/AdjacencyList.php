@@ -1,9 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2019/1/14 0014
- * Time: 下午 2:40
+ * Created by VsCode.
+ * User: ShwanPuth
+ * Date: 2019/4/11 
+ * Time: 下午 4:51
  */
 
 namespace DenDroGram\Controller;
@@ -27,17 +27,17 @@ EOF;
      * @param array $column
      * @return mixed|string
      */
-    public function buildTree($id, array $column = ['name'])
-    {
+    public function buildTree($id, array $column = ['name'], string $pid = 'pid')
+    {   
+        // var_dump($pid);die;
         $css = file_get_contents(__DIR__ . '/../Static/dendrogram.css');
         $js = file_get_contents(__DIR__ . '/../Static/dendrogram.js');
         if(($form_action = config('dendrogram.form_action',''))){
             $js = sprintf($js,$form_action);
         }
 
-        $data = AdjacencyListModel::getChildren($id);
-
-        $html = (new AdjacencyListViewModel($column))->index($data);
+        $data = AdjacencyListModel::getChildren($id, $pid);
+        $html = (new AdjacencyListViewModel($column, $pid))->index($data, $pid);
         return sprintf(self::$view, $css, $js, $html);
     }
 
@@ -48,7 +48,7 @@ EOF;
     public function getTreeData($id)
     {
         $data = AdjacencyListModel::getChildren($id);
-        $tree = Func::quadraticArrayToTreeData($data, 'id', 'p_id', 'children');
+        $tree = Func::quadraticArrayToTreeData($data, 'id', 'agent_id', 'children');
         return $tree;
     }
 

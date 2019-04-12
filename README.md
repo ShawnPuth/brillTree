@@ -15,7 +15,7 @@
 </tr></tbody></table>
 
 ### 安装
-    composer require brill-tree/brill-tree:v1.0
+    composer require brill-tree/brill-tree
 
 ### 配置
 首先往Laravel应用中注册ServiceProvider，打开文件config/app.php，在providers中添加一项：
